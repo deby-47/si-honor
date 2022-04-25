@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
+use App\Models\Jabatan;
+use App\Models\Pegawai;
+use Illuminate\Http\Request;
+
+class PegawaiController extends Controller
+{
+    public function kuota()
+    {
+        return $this->hasMany(Jabatan::class, 'id');
+    }
+
+    public function index()
+    {
+        $pgs = DB::table('pegawai')
+            ->join('jabatan', 'pegawai.jabatan', '=', 'jabatan.id')
+            ->get();
+
+        // $pgs = Pegawai::all(); //fetch all data from db
+        return view('layouts.pegawai.index', [
+            'pg' => $pgs,
+        ]); //return with view
+    }
+
+    public function create()
+    {
+        return view('layouts.pegawai.create');
+    }
+
+    public function store(Request $request)
+    {
+        $pg = new Pegawai;
+        $pg->nip = $request->nip;
+        $pg->no_rekening = $request->no_rekening;
+        $pg->nama = $request->nama;
+        $pg->jabatan = $pg->jabatan;
+        $pg->save();
+        
+        return $pg;
+    }
+}

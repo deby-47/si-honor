@@ -144,171 +144,79 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+              <a href="/api/pegawai/tambah" class="btn btn-sm btn-neutral">Tambah Pegawai</a>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Page content -->
-    <div class="container-fluid mt--6">
+    <div class="container-fluid mt--5">
       <div class="row">
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Daftar Honorarium</h3>
+              <h3 class="mb-0">Daftar Pegawai</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="pegawai">Pegawai</th>
+                    <th scope="col" class="sort" data-sort="no">No</th>
+                    <th scope="col" class="sort" data-sort="no_rek">No Rekening</th>
+                    <th scope="col" class="sort" data-sort="nip">NIP</th>
+                    <th scope="col" class="sort" data-sort="nama">Nama</th>
+                    <th scope="col" class="sort" data-sort="jabatan">Jabatan</th>
                     <th scope="col" class="sort" data-sort="kuota">Kuota Honor</th>
-                    <th scope="col" class="sort" data-sort="jumlah">Jumlah</th>
-                    <th scope="col" class="sort" data-sort="asal">Asal</th>
-                    <th scope="col" class="sort" data-sort="tanggal">Tanggal Penerimaan</th>
-                    <th scope="col" class="sort" data-sort="dokumen">No SP2D</th>
                     <th scope="col" class="sort">Action</th>
                   </tr>
                 </thead>
                 <tbody class="list">
+                  @foreach ($pg as $pg)
                   <tr>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">Angular Now UI Kit PRO</span>
+                          <span class="name mb-0 text-sm">{{ $pg->id }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $pg->no_rekening }}</span>
                         </div>
                       </div>
                     </th>
                     <td>
                       <div class="d-flex align-items-center">
-                        <span class="completion mr-2">3</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%;"></div>
-                          </div>
-                        </div>
+                        <span class="completion mr-2">{{ $pg->nip }}</span>
                       </div>
                     </td>
-                    <td class="budget">
-                      $1800 USD
+                    <td class="nama">
+                      {{ $pg->nama }}
                     </td>
-                    <td class="asal"><strong>X</strong></td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <p>
-                          <script>
-                            document.write(new Date().toDateString());
-                          </script>
-                        </p>
-                      </span>
+                    <td class="asal">
+                      {{ $pg->kode }}
+                    </td>
+                    <td class="max_kuota">
+                      {{ $pg->max_kuota }}
                     </td>
                     <td>
-
-                    </td>
-                    <td class="text-right">
                       <div class="dropdown">
                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-ellipsis-v"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <a class="dropdown-item" href="#">Action</a>
+                          <a class="dropdown-item" href="/api/pegawai/ubah">Ubah</a>
+                          <a class="dropdown-item" href="#">Hapus</a>
                         </div>
                       </div>
                     </td>
                   </tr>
-                  <tr>
-                    <th scope="row">
-                      <div class="media align-items-center">
-                        <div class="media-body">
-                          <span class="name mb-0 text-sm">React Material Dashboard</span>
-                        </div>
-                      </div>
-                    </th>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="completion mr-2">2</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="budget">
-                      $4400 USD
-                    </td>
-                    <td class="asal"> <strong>X</strong></td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <p>
-                          <script>
-                            document.write(new Date().toDateString());
-                          </script>
-                        </p>
-                      </span>
-                    </td>
-                    <td>
-
-                    </td>
-                    <td class="text-right">
-                      <div class="dropdown">
-                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-ellipsis-v"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <a class="dropdown-item" href="#">Action</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <div class="media align-items-center">
-                        <div class="media-body">
-                          <span class="name mb-0 text-sm">Vue Paper UI Kit PRO</span>
-                        </div>
-                      </div>
-                    </th>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="completion mr-2">4</span>
-                        <div>
-                          <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%;"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="budget">
-                      $2200 USD
-                    </td>
-                    <td class="asal"><strong>X</strong></td>
-                    <td>
-                      <span class="badge badge-dot mr-4">
-                        <p>
-                          <script>
-                            document.write(new Date().toDateString());
-                          </script>
-                        </p>
-                      </span>
-                    </td>
-                    <td>
-
-                    </td>
-                    <td class="text-right">
-                      <div class="dropdown">
-                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-ellipsis-v"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                          <a class="dropdown-item" href="#">Action</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
