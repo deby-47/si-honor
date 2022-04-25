@@ -174,35 +174,35 @@
                   </tr>
                 </thead>
                 <tbody class="list">
-                  @foreach ($pg as $pg)
+                  @foreach ($pg as $pgs)
                   <tr>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $pg->id }}</span>
+                          <span class="name mb-0 text-sm">{{ $pgs->id }}</span>
                         </div>
                       </div>
                     </th>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $pg->no_rekening }}</span>
+                          <span class="name mb-0 text-sm">{{ $pgs->no_rekening }}</span>
                         </div>
                       </div>
                     </th>
                     <td>
                       <div class="d-flex align-items-center">
-                        <span class="completion mr-2">{{ $pg->nip }}</span>
+                        <span class="completion mr-2">{{ $pgs->nip }}</span>
                       </div>
                     </td>
                     <td class="nama">
-                      {{ $pg->nama }}
+                      {{ $pgs->nama }}
                     </td>
                     <td class="asal">
-                      {{ $pg->kode }}
+                      {{ $pgs->kode }}
                     </td>
                     <td class="max_kuota">
-                      {{ $pg->max_kuota }}
+                      {{ $pgs->max_kuota }}
                     </td>
                     <td>
                       <div class="dropdown">

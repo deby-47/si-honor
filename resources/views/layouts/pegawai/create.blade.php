@@ -40,22 +40,22 @@
         <div class="container-fluid mt--7">
             <div class="header-body mt-7 mb-7">
                 <div class="col-xs-6" style="position:fixed; left: 300px; right: 80px;">
-                    <form>
+                    <form method="POST">
                         <div class="form-group">
                             <label for="nip">NIP</label>
-                            <input type="text" class="form-control" id="nip" placeholder="NIP">
+                            <input id="nip" type="text" class="form-control" name="nip" placeholder="NIP">
                         </div>
                         <div class="form-group">
                             <label for="no_rekening">No Rekening</label>
-                            <input type="text" class="form-control" id="no_rekening" placeholder="No Rekening">
+                            <input id="no_rekening" type="text" class="form-control" name="no_rekening" placeholder="No Rekening">
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama</label>
-                            <input type="text" class="form-control" id="nama" placeholder="Nama">
+                            <input id="nama" type="text" class="form-control" name="nama" placeholder="Nama">
                         </div>
                         <div class="form-group">
                             <label for="jabatan">Jabatan</label>
-                            <input type="text" class="form-control" id="jabatan" placeholder="Jabatan">
+                            <input id="jabatan" type="text" class="form-control" name="jabatan" placeholder="Jabatan">
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>

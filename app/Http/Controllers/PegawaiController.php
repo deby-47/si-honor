@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Jabatan;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class PegawaiController extends Controller
 {
@@ -16,12 +17,12 @@ class PegawaiController extends Controller
     public function index()
     {
         $pgs = DB::table('pegawai')
-            ->join('jabatan', 'pegawai.jabatan', '=', 'jabatan.id')
+            ->join('jabatan', 'pegawai.jabatan', '=', 'jabatan.id_jbt')
             ->get();
 
         // $pgs = Pegawai::all(); //fetch all data from db
         return view('layouts.pegawai.index', [
-            'pg' => $pgs,
+            'pg' => $pgs->sortBy('id'),
         ]); //return with view
     }
 
@@ -36,9 +37,9 @@ class PegawaiController extends Controller
         $pg->nip = $request->nip;
         $pg->no_rekening = $request->no_rekening;
         $pg->nama = $request->nama;
-        $pg->jabatan = $pg->jabatan;
+        $pg->jabatan = $request->jabatan;
         $pg->save();
-        
-        return $pg;
+
+        return Redirect::to('/api/pegawai');
     }
 }
