@@ -205,11 +205,11 @@
                       {{ $pgs->max_kuota }}
                     </td>
                     <td>
-                      <a class="btn btn-sm btn-primary" href="/api/pegawai/ubah">Ubah</a>                  
+                      <a class="btn btn-xs btn-primary" href="/api/pegawai/{{ $pgs->id }}/edit">Ubah</a>                  
                       <form method="POST" action="{{ route('hapus', [$pgs->id]) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">
-                        <button type="submit" class="btn btn-sm btn-danger">
+                        <button type="submit" class="btn btn-xs btn-danger">
                           <i data-feather="delete"></i> Hapus
                         </button>
                       </form>

@@ -11,4 +11,10 @@ class Pegawai extends Model
 
     public $table = "pegawai";
     protected $fillable = ['nip', 'no_rekening', 'nama', 'jabatan'];
+
+    public $rules = array(
+        'nip' => 'The :attribute field is required',
+        'nama' => 'required',
+        'jabatan' => 'required'
+    );
 }
