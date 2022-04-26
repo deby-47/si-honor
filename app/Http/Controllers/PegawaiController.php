@@ -20,7 +20,6 @@ class PegawaiController extends Controller
             ->join('jabatan', 'pegawai.jabatan', '=', 'jabatan.id_jbt')
             ->get();
 
-        // $pgs = Pegawai::all(); //fetch all data from db
         return view('layouts.pegawai.index', [
             'pg' => $pgs->sortBy('id'),
         ]); //return with view
@@ -33,12 +32,27 @@ class PegawaiController extends Controller
 
     public function store(Request $request)
     {
+
+        // $validation = $request->validate([
+        //     'nip' => 'required',
+        //     'nama' => 'required',
+        //     'jabatan' => 'required'
+        // ]);
+
         $pg = new Pegawai;
         $pg->nip = $request->nip;
         $pg->no_rekening = $request->no_rekening;
         $pg->nama = $request->nama;
         $pg->jabatan = $request->jabatan;
         $pg->save();
+
+        return Redirect::to('/api/pegawai');
+    }
+
+    public function destroy($id)
+    {
+        $pg = Pegawai::find($id);
+        $pg->delete();
 
         return Redirect::to('/api/pegawai');
     }

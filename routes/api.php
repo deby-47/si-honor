@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/pegawai', [PegawaiController::class, 'index']);
 Route::get('/pegawai/tambah', [PegawaiController::class, 'create']); // show form
 Route::post('/pegawai/tambah', [PegawaiController::class, 'store']); // save to db
+Route::post('/pegawai/hapus/{id}', [PegawaiController::class, 'destroy'])->name('hapus');
