@@ -48,7 +48,7 @@ class PegawaiController extends Controller
         $pg->nip = $request->nip;
         $pg->no_rekening = $request->no_rekening;
         $pg->nama = $request->nama;
-        $pg->jabatan = $request->jabatan;
+        $pg->jabatan = $request->input('jabatan');
         $pg->save();
 
         return Redirect::to('/api/pegawai');
@@ -67,7 +67,10 @@ class PegawaiController extends Controller
     public function edit(Request $request)
     {
         $id = $request->id;
-        $pg = DB::table('pegawai')->where('id', $id)->get();
+        $pg = DB::table('pegawai')
+            ->join('jabatan', 'pegawai.jabatan', '=', 'jabatan.id_jbt')
+            ->where('pegawai.status', '=', 1)->where('id', $id)
+            ->get();
 
         return view('layouts.pegawai.edit', [
             'pg' => $pg,
@@ -91,7 +94,7 @@ class PegawaiController extends Controller
             'nip' => $request->nip,
             'no_rekening' =>$request->no_rekening,
             'nama' => $request->nama,
-            'jabatan' => $request->jabatan
+            'jabatan' => $request->input('jabatan')
         ]);
 
         return Redirect::to('/api/pegawai');

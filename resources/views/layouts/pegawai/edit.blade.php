@@ -55,8 +55,13 @@
                             <input value="{{ $pgs->nama }}" id="nama" type="text" class="form-control" name="nama" placeholder="Nama" required>
                         </div>
                         <div class="form-group">
-                            <label for="jabatan">Jabatan</label>
-                            <input value="{{ $pgs->jabatan }}" id="jabatan" type="text" class="form-control" name="jabatan" placeholder="Jabatan" required>
+                        <label for="jabatan">Jabatan</label><br />
+                            <select class="custom-select" name="jabatan" required>
+                                <option selected disabled hidden>{{ $pgs->kode }}</option>
+                                @foreach (App\Models\Jabatan::selectJbt() as $j)
+                                <option value="{{ $j->id_jbt }}">{{ $j->kode }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>

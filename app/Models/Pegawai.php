@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Pegawai extends Model
 {
@@ -12,9 +13,12 @@ class Pegawai extends Model
     public $table = "pegawai";
     protected $fillable = ['nip', 'no_rekening', 'nama', 'jabatan'];
 
-    public $rules = array(
-        'nip' => 'The :attribute field is required',
-        'nama' => 'required',
-        'jabatan' => 'required'
-    );
+    public function selectPegawai()
+    {
+        $pg = DB::table('pegawai')
+            ->select('id', 'nama')
+            ->get();
+
+        return $pg;
+    }
 }

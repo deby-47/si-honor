@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\TrxController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,7 @@ Route::post('/pegawai/tambah', [PegawaiController::class, 'store']); // save to 
 Route::post('/pegawai/hapus/{id}', [PegawaiController::class, 'destroy'])->name('hapus'); //delete from db (fix later to soft delete!)
 Route::get('/pegawai/{id}/edit', [PegawaiController::class, 'edit']); // show form
 Route::post('/pegawai/{id}/edit', [PegawaiController::class, 'update']); // save to db
+
+Route::get('/trx', [TrxController::class, 'index']);
+Route::get('/trx/tambah', [TrxController::class, 'create']); // show form
+Route::post('/trx/tambah', [TrxController::class, 'store']); // save to db

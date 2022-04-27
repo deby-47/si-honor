@@ -1,5 +1,5 @@
 @extends('layouts.pegawai.app')
-<title>Tambah Pegawai</title>
+<title>Tambah Transaksi</title>
 
 <body>
     <nav class="sidenav navbar navbar-verticaL fixed-left navbar-expand-xs navbar-light" id="sidenav-main">
@@ -34,7 +34,7 @@
         </div>
     </nav>
     <div class="mt-3" style="position:fixed; left: 820px;">
-        <h2 class="mb-0">Tambah Pegawai</h2>
+        <h2 class="mb-0">Tambah Transaksi</h2>
     </div>
     <div class="header bg-gradient" style="position:fixed; left: 300px; right: 80px; top: 100px;">
         <div class="container-fluid mt--7">
@@ -42,16 +42,13 @@
                 <div class="col-xs-6" style="position:fixed; left: 300px; right: 80px;">
                     <form method="POST">
                         <div class="form-group">
-                            <label for="nip">NIP</label>
-                            <input id="nip" type="text" class="form-control" name="nip" placeholder="NIP" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="no_rekening">No Rekening</label>
-                            <input id="no_rekening" type="text" class="form-control" name="no_rekening" placeholder="No Rekening">
-                        </div>
-                        <div class="form-group">
-                            <label for="nama">Nama</label>
-                            <input id="nama" type="text" class="form-control" name="nama" placeholder="Nama" required>
+                            <label for="id_pegawai">Pegawai</label>
+                            <select class="custom-select" name="id_pegawai" required>
+                                <option selected>Pilih Pegawai</option>
+                                @foreach (App\Models\Pegawai::selectPegawai() as $pg)
+                                <option value="{{ $pg->id }}">{{ $pg->nama }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="jabatan">Jabatan</label><br />
@@ -62,6 +59,19 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="no_sppd">No SP2D</label>
+                            <input id="no_sppd" type="text" class="form-control" name="no_sppd" placeholder="No SP2D" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Jumlah</label>
+                            <input id="jumlah" type="text" class="form-control" name="jumlah" placeholder="Jumlah" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama">Tanggal Penerimaan</label>
+                            <input id="tanggal_penerimaan" type="date" class="form-control" name="tanggal_penerimaan" required>
+                        </div>
+                        
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
                 </div>
