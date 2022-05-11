@@ -137,7 +137,7 @@
                     <th scope="col" class="sort" data-sort="pegawai">Pegawai</th>
                     <th scope="col" class="sort" data-sort="jabatan">Jabatan</th>
                     <th scope="col" class="sort" data-sort="tanggal">Tanggal Penerimaan</th>
-                    <th scope="col" class="sort" data-sort="sppd">No SP2D</th>
+                    <th scope="col" class="sort" data-sort="sppd">No SK</th>
                     <th scope="col" class="sort" data-sort="jumlah">Jumlah</th>
                     <th scope="col" class="sort" data-sort="kuota">Kuota Honor</th>
                     <th scope="col" class="sort">Action</th>
@@ -198,9 +198,9 @@
                     </th>
                     <td>
                       <a class="btn btn-xs btn-primary" href="/api/trx/{{ $t->id }}/edit">Ubah</a>
-                      <form method="POST" action="{{ route('hapus', [$t->id]) }}">
+                      <form method="POST" action="{{ route('hapus_trx', [$t->id]) }}">
                         @csrf
-                        <input type="hidden" name="destroy" value="DELETE">
+                        <input type="hidden" name="destroys" value="DELETE">
                         <button type="submit" class="btn btn-xs btn-danger">
                           <i data-feather="delete"></i> Hapus
                         </button>

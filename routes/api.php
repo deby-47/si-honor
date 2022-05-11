@@ -16,17 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::get('/pegawai', [PegawaiController::class, 'index']);
 Route::get('/pegawai/tambah', [PegawaiController::class, 'create']); // show form
 Route::post('/pegawai/tambah', [PegawaiController::class, 'store']); // save to db
-Route::post('/pegawai/hapus/{id}', [PegawaiController::class, 'destroy'])->name('hapus'); //delete from db (fix later to soft delete!)
+Route::post('/pegawai/hapus/{id}', [PegawaiController::class, 'destroy'])->name('hapus');
 Route::get('/pegawai/{id}/edit', [PegawaiController::class, 'edit']); // show form
 Route::post('/pegawai/{id}/edit', [PegawaiController::class, 'update']); // save to db
 
 Route::get('/trx', [TrxController::class, 'index']);
+Route::get('/trx/save', [TrxController::class, 'index_success']);
 Route::get('/trx/tambah', [TrxController::class, 'create']); // show form
 Route::post('/trx/tambah', [TrxController::class, 'store']); // save to db
+Route::get('/trx/notif', function () {
+    return view('layouts.transaksi.alert');
+});
+Route::post('/trx/hapus/{id}', [TrxController::class, 'destroy'])->name('hapus_trx');

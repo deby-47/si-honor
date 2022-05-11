@@ -21,7 +21,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('table') }}">
+                            <a class="nav-link" href="/api/trx">
                                 <i class="ni ni-bullet-list-67 text-default"></i>
                                 <span class="nav-link-text">Daftar Honorarium</span>
                             </a>
@@ -50,7 +50,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="jabatan">Jabatan</label><br />
                             <select class="custom-select" name="jabatan" required>
                                 <option selected>Pilih Jabatan</option>
@@ -58,10 +58,10 @@
                                 <option value="{{ $j->id_jbt }}">{{ $j->kode }}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> -->
                         <div class="form-group">
-                            <label for="no_sppd">No SP2D</label>
-                            <input id="no_sppd" type="text" class="form-control" name="no_sppd" placeholder="No SP2D" required>
+                            <label for="no_sppd">No SK</label>
+                            <input id="no_sppd" type="text" class="form-control" name="no_sppd" placeholder="No SK" required>
                         </div>
                         <div class="form-group">
                             <label for="nama">Jumlah</label>
@@ -71,11 +71,12 @@
                             <label for="nama">Tanggal Penerimaan</label>
                             <input id="tanggal_penerimaan" type="date" class="form-control" name="tanggal_penerimaan" required>
                         </div>
-                        
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+
+                        <button id="save" type="submit" class="btn btn-primary">Simpan</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </body>
+</html>

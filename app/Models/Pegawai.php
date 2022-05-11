@@ -17,6 +17,7 @@ class Pegawai extends Model
     {
         $pg = DB::table('pegawai')
             ->select('id', 'nama')
+            ->where('status', '=', 1)
             ->get();
 
         return $pg;

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
-  <title>Daftar Pegawai</title>
+  <title>Daftar Honorarium</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
   <!-- Fonts -->
@@ -16,10 +16,10 @@
   <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
-  <link rel="stylesheet" href="/docs/assets/vendor/sweetalert2/dist/sweetalert2.min.css">
 </head>
 
 <body>
+@include('sweetalert::alert')
   <!-- Sidenav -->
   <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
     <div class="scrollbar-inner">
@@ -96,37 +96,6 @@
               </a>
             </li>
           </ul>
-          <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
-            <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div class="media align-items-center">
-                  <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg">
-                  </span>
-                  <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">Admin</span>
-                  </div>
-                </div>
-              </a>
-              <div class="dropdown-menu  dropdown-menu-right ">
-                <div class="dropdown-header noti-title">
-                  <h6 class="text-overflow m-0">Welcome!</h6>
-                </div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>My profile</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                  <div class="dropdown-divider"></div>
-                  <a href="#!" class="dropdown-item">
-                    <i class="ni ni-user-run"></i>
-                    <span>Logout</span>
-                  </a>
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
     </nav>
@@ -145,72 +114,95 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="/api/pegawai/tambah" class="btn btn-sm btn-neutral">Tambah Pegawai</a>
+              <a href="/api/trx/tambah" class="btn btn-sm btn-neutral">Tambah Transaksi</a>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Page content -->
-    <div class="container-fluid mt--5">
+    <div class="container-fluid mt--6">
       <div class="row">
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">Daftar Pegawai</h3>
+              <h3 class="mb-0">Daftar Honorarium</h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
-              <table class="table align-items-center table-flush">
+              <table class="table align-items-center table-flush" counter-increment: 1>
                 <thead class="thead-light">
                   <tr>
                     <th scope="col" class="sort" data-sort="no">No</th>
-                    <th scope="col" class="sort" data-sort="no_rek">No Rekening</th>
-                    <th scope="col" class="sort" data-sort="nip">NIP</th>
-                    <th scope="col" class="sort" data-sort="nama">Nama</th>
+                    <th scope="col" class="sort" data-sort="pegawai">Pegawai</th>
                     <th scope="col" class="sort" data-sort="jabatan">Jabatan</th>
+                    <th scope="col" class="sort" data-sort="tanggal">Tanggal Penerimaan</th>
+                    <th scope="col" class="sort" data-sort="sppd">No SP2D</th>
+                    <th scope="col" class="sort" data-sort="jumlah">Jumlah</th>
                     <th scope="col" class="sort" data-sort="kuota">Kuota Honor</th>
                     <th scope="col" class="sort">Action</th>
                   </tr>
                 </thead>
+                @php $counter = 0 @endphp
                 <tbody class="list">
-                  @foreach ($pg as $pgs)
+                  @foreach ($trx as $t)
                   <tr>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $pgs->id }}</span>
+                          <span class="name mb-0 text-sm">{{ $counter += 1 }}</span>
                         </div>
                       </div>
                     </th>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $pgs->no_rekening }}</span>
+                          <span class="name mb-0 text-sm">{{ $t->nama }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->kode }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->tanggal_penerimaan }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->no_sppd }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->jumlah }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->kuota }}</span>
                         </div>
                       </div>
                     </th>
                     <td>
-                      <div class="d-flex align-items-center">
-                        <span class="completion mr-2">{{ $pgs->nip }}</span>
-                      </div>
-                    </td>
-                    <td class="nama">
-                      {{ $pgs->nama }}
-                    </td>
-                    <td class="jabatan">
-                      {{ $pgs->kode }}
-                    </td>
-                    <td class="max_kuota">
-                      {{ $pgs->max_kuota }}
-                    </td>
-                    <td>
-                      <a class="btn btn-xs btn-primary" href="/api/pegawai/{{ $pgs->id }}/edit">Ubah</a>                  
-                      <form method="POST" action="{{ route('hapus', [$pgs->id]) }}">
+                      <a class="btn btn-xs btn-primary" href="/api/trx/{{ $t->id }}/edit">Ubah</a>
+                      <form method="POST" action="{{ route('hapus_trx', [$t->id]) }}">
                         @csrf
-                        <input type="hidden" name="destroy" value="DELETE">
-                        <button type="submit" class="btn btn-xs btn-danger" data-toggle="sweet-alert" data-sweet-alert="confirm">
+                        <input type="hidden" name="destroys" value="DELETE">
+                        <button type="submit" class="btn btn-xs btn-danger">
                           <i data-feather="delete"></i> Hapus
                         </button>
                       </form>
@@ -270,7 +262,6 @@
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
-  
 </body>
 
 </html>
