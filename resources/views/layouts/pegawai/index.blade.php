@@ -208,8 +208,8 @@
                       {{ $pgs->max_kuota }}
                     </td>
                     <td>
-                      <a class="btn btn-xs btn-primary" href="/api/pegawai/{{ DB::table('pegawai')->select('id')->value('id') }}/edit">Ubah</a>
-                      <form method="POST" action="{{ route('hapus', DB::table('pegawai')->select('id')->value('id')) }}">
+                      <a class="btn btn-xs btn-primary" href="/api/pegawai/{{ $pgs->id }}/edit">Ubah</a>
+                      <form method="POST" action="{{ route('hapus', $pgs->id) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">
                         <button type="submit" class="btn btn-xs btn-danger" data-toggle="sweet-alert" data-sweet-alert="confirm">

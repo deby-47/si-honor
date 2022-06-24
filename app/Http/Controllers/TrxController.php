@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TransaksiExport;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class TrxController extends Controller
@@ -72,13 +74,30 @@ class TrxController extends Controller
         
         if ($trx->kuota < 0) 
         {
-            Alert::error('Gagal', 'Kuota penerimaan honorarium sudah tercapai.');
+            alert()->html('Gagal','<a href="/api/export" target="_blank"><b>Download</b></a> riwayat penerimaan honorarium.','error');
             return view('layouts.transaksi.create');
         }
 
         $trx->save();
         Alert::success('Sukses!', 'Data berhasil tersimpan');
         return view('layouts.transaksi.create');
+    }
+
+    public function edit(Request $request)
+    {
+        $id = $request->id;
+        $trx = DB::table('transaksi')
+            ->join('jabatan', 'transaksi.id_jabatan', '=', 'jabatan.id_jbt')
+            ->join('pegawai', 'pegawai.id_pg', '=', 'transaksi.id_pegawai')
+            ->where('pegawai.status', '=', 1)
+            ->orderBy('transaksi.created_at', 'ASC')
+            ->where('transaksi.status', '=', 1)
+            ->where('transaksi.id_trx', '=', $id)
+            ->get();
+        
+        return view('layouts.transaksi.edit', [
+            'trx' => $trx,
+        ]);
     }
 
     public function destroy($id)
@@ -88,5 +107,10 @@ class TrxController extends Controller
         ]);
 
         return Redirect::to('/api/trx');
+    }
+
+    public function export()
+    {
+        return Excel::download(new TransaksiExport, 'riwayat_transaksi.xlsx');
     }
 }

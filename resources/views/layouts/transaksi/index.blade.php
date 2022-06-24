@@ -144,7 +144,7 @@
                     <th scope="col" class="sort">Action</th>
                   </tr>
                 </thead>
-                @php $counter = 0 @endphp
+                @php $counter = 0 @endphp@php $counter = 0 @endphp
                 <tbody class="list">
                   @foreach ($trx as $t)
                   <tr>

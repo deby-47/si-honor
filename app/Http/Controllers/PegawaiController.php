@@ -89,10 +89,10 @@ class PegawaiController extends Controller
         ];
 
         $this->validate($request, $rules, $msg);
-        dd($request->id);
+        
         DB::table('pegawai')->where('id', $request->id)->update([
             'nip' => $request->nip,
-            'no_rekening' =>$request->no_rekening,
+            'no_rekening' => $request->no_rekening,
             'nama' => $request->nama,
             'jabatan' => $request->input('jabatan')
         ]);
