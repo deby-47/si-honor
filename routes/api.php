@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\TrxController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +26,4 @@ Route::get('/trx', [TrxController::class, 'index']);
 Route::get('/trx/save', [TrxController::class, 'index_success']);
 Route::get('/trx/tambah', [TrxController::class, 'create']); // show form
 Route::post('/trx/tambah', [TrxController::class, 'store']); // save to db
-Route::get('/trx/notif', function () {
-    return view('layouts.transaksi.alert');
-});
-Route::post('/trx/hapus/{id}', [TrxController::class, 'destroy'])->name('hapus_trx');
+Route::post('/trx/hapus/{id}', [TrxController::class, 'destroy'])->name('trx_hapus');

@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
   <meta name="author" content="Creative Tim">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
   <title>Daftar Pegawai</title>
   <!-- Favicon -->
   <link rel="icon" href="../assets/img/brand/favicon.png" type="image/png">
@@ -206,8 +208,8 @@
                       {{ $pgs->max_kuota }}
                     </td>
                     <td>
-                      <a class="btn btn-xs btn-primary" href="/api/pegawai/{{ $pgs->id }}/edit">Ubah</a>                  
-                      <form method="POST" action="{{ route('hapus', [$pgs->id]) }}">
+                      <a class="btn btn-xs btn-primary" href="/api/pegawai/{{ DB::table('pegawai')->select('id')->value('id') }}/edit">Ubah</a>
+                      <form method="POST" action="{{ route('hapus', DB::table('pegawai')->select('id')->value('id')) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">
                         <button type="submit" class="btn btn-xs btn-danger" data-toggle="sweet-alert" data-sweet-alert="confirm">
@@ -270,7 +272,7 @@
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
-  
+
 </body>
 
 </html>

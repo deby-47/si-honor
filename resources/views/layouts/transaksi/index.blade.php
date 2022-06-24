@@ -25,7 +25,7 @@
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
         <a class="navbar-brand" href="javascript:void(0)">
-          <img src="../assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+          <img src="../resources/views/layouts/logo/bkad.png">
         </a>
       </div>
       <div class="navbar-inner">
@@ -137,9 +137,10 @@
                     <th scope="col" class="sort" data-sort="pegawai">Pegawai</th>
                     <th scope="col" class="sort" data-sort="jabatan">Jabatan</th>
                     <th scope="col" class="sort" data-sort="tanggal">Tanggal Penerimaan</th>
-                    <th scope="col" class="sort" data-sort="sppd">No SK</th>
+                    <th scope="col" class="sort" data-sort="sk">No SK</th>
+                    <th scope="col" class="sort" data-sort="deskripsi">Deskripsi Kegiatan</th>
                     <th scope="col" class="sort" data-sort="jumlah">Jumlah</th>
-                    <th scope="col" class="sort" data-sort="kuota">Kuota Honor</th>
+                    <th scope="col" class="sort" data-sort="kuota">Kuota Honorarium</th>
                     <th scope="col" class="sort">Action</th>
                   </tr>
                 </thead>
@@ -171,14 +172,21 @@
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $t->tanggal_penerimaan }}</span>
+                          <span class="name mb-0 text-sm">{{ Carbon\Carbon::parse($t->tanggal_penerimaan)->translatedFormat('d F Y') }}</span>
                         </div>
                       </div>
                     </th>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $t->no_sppd }}</span>
+                          <span class="name mb-0 text-sm">{{ $t->no_sk }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->deskripsi }}</span>
                         </div>
                       </div>
                     </th>
@@ -192,16 +200,16 @@
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $t->kuota }}</span>
+                          <span class="name mb-0 text-sm" >{{ $t->kuota }}</span>
                         </div>
                       </div>
                     </th>
                     <td>
-                      <a class="btn btn-xs btn-primary" href="/api/trx/{{ $t->id }}/edit">Ubah</a>
-                      <form method="POST" action="{{ route('hapus_trx', [$t->id]) }}">
+                      <a class="btn btn-xs btn-primary" href="/api/trx/{{ DB::table('transaksi')->select('id_trx')->value('id_trx') }}/edit">Ubah</a>
+                      <form method="POST" action="{{ route('trx_hapus', $t->id_trx) }}">
                         @csrf
-                        <input type="hidden" name="destroys" value="DELETE">
-                        <button type="submit" class="btn btn-xs btn-danger">
+                        <input type="hidden" name="destroy" value="DELETE">
+                        <button type="submit" class="btn btn-xs btn-danger" data-toggle="sweet-alert" data-sweet-alert="confirm">
                           <i data-feather="delete"></i> Hapus
                         </button>
                       </form>

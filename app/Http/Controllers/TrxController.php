@@ -6,7 +6,6 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -19,10 +18,11 @@ class TrxController extends Controller
             ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
             ->where('pegawai.status', '=', 1)
             ->orderBy('transaksi.created_at', 'ASC')
+            ->where('transaksi.status', '=', 1)
             ->get();
 
         return view('layouts.transaksi.index', [
-            'trx' => $trx->sortBy('id'),
+            'trx' => $trx->sortBy('id_trx'),
         ]); //return with view
     }
 
@@ -42,33 +42,50 @@ class TrxController extends Controller
         $latest = DB::table('transaksi')
             ->where('id_pegawai', '=', $request->input('id_pegawai'))
             ->orderBy('created_at', 'DESC')->limit(1)
+            ->where('status', '=', 1)
             ->value('kuota');
         $empty = DB::table('transaksi')
             ->where('id_pegawai', '=', $request->input('id_pegawai'))
+            ->where('status', '=', 1)
             ->get();
+        $check_sk = DB::table('transaksi')
+                -> select('no_sk')
+                -> where('id_pegawai', '=', $request->input('id_pegawai'))
+                -> where('no_sk', '=', $request->input('no_sk'))
+                -> where('status', '=', 1)
+                -> get();
+        $check_deskripsi = DB::table('transaksi')
+                -> select('deskripsi')
+                -> where('id_pegawai', '=', $request->input('id_pegawai'))
+                -> where('deskripsi', '=', $request->input('deskripsi'))
+                -> where('status', '=', 1)
+                -> get();
 
         $trx = new Transaksi;
         $trx->id_pegawai = $request->input('id_pegawai');
         $trx->id_jabatan = $jabatan;
-        $trx->no_sppd = $request->no_sppd;
+        $trx->no_sk = $request->no_sk;
+        $trx->deskripsi = $request->deskripsi;
         $trx->jumlah = $request->jumlah;
-        $trx->kuota = ($empty->isEmpty()) ? ($max - 1) : ($latest - 1);
         $trx->tanggal_penerimaan = $request->input('tanggal_penerimaan');
-
-        if ($trx->kuota < 0) {
-            Alert::error('Gagal', 'Kuota penerimaan honor sudah tercapai.');
+        $trx->kuota = $empty->isEmpty() ? $max - 1 : ($check_sk->isEmpty() && $check_deskripsi->isEmpty() ? $latest - 1 : $latest);
+        
+        if ($trx->kuota < 0) 
+        {
+            Alert::error('Gagal', 'Kuota penerimaan honorarium sudah tercapai.');
             return view('layouts.transaksi.create');
         }
 
         $trx->save();
         Alert::success('Sukses!', 'Data berhasil tersimpan');
-        return Redirect::to('/api/trx');
+        return view('layouts.transaksi.create');
     }
 
     public function destroy($id)
     {
-        Transaksi::find($id);
-        DB::table('transaksi')->where('id', $id)->delete();
+        DB::table('transaksi')->where('id_trx', $id)->update([
+            'status' => 0
+        ]);
 
         return Redirect::to('/api/trx');
     }

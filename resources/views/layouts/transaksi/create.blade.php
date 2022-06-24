@@ -60,8 +60,12 @@
                             </select>
                         </div> -->
                         <div class="form-group">
-                            <label for="no_sppd">No SK</label>
-                            <input id="no_sppd" type="text" class="form-control" name="no_sppd" placeholder="No SK" required>
+                            <label for="no_sk">No SK</label>
+                            <input id="no_sk" type="text" class="form-control" name="no_sk" placeholder="No SK" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="no_sk">Deskripsi Kegiatan</label>
+                            <input id="no_sk" type="text" class="form-control" name="deskripsi" placeholder="Deskripsi" required>
                         </div>
                         <div class="form-group">
                             <label for="nama">Jumlah</label>
