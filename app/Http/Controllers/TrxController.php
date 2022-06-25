@@ -13,6 +13,12 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class TrxController extends Controller
 {
+    private $id_pg;
+
+    public function __construct()
+    {
+        $this->id_pg;
+    }
     public function index()
     {
         $trx = DB::table('transaksi')
@@ -50,31 +56,25 @@ class TrxController extends Controller
             ->where('id_pegawai', '=', $request->input('id_pegawai'))
             ->where('status', '=', 1)
             ->get();
-        $check_sk = DB::table('transaksi')
-                -> select('no_sk')
-                -> where('id_pegawai', '=', $request->input('id_pegawai'))
-                -> where('no_sk', '=', $request->input('no_sk'))
-                -> where('status', '=', 1)
-                -> get();
         $check_deskripsi = DB::table('transaksi')
-                -> select('deskripsi')
-                -> where('id_pegawai', '=', $request->input('id_pegawai'))
-                -> where('deskripsi', '=', $request->input('deskripsi'))
-                -> where('status', '=', 1)
-                -> get();
+            ->select('deskripsi')
+            ->where('id_pegawai', '=', $request->input('id_pegawai'))
+            ->where('deskripsi', '=', $request->input('deskripsi'))
+            ->where('status', '=', 1)
+            ->get();
 
         $trx = new Transaksi;
         $trx->id_pegawai = $request->input('id_pegawai');
+        $this->id_pg = $trx->id_pegawai;
         $trx->id_jabatan = $jabatan;
         $trx->no_sk = $request->no_sk;
         $trx->deskripsi = $request->deskripsi;
         $trx->jumlah = $request->jumlah;
         $trx->tanggal_penerimaan = $request->input('tanggal_penerimaan');
-        $trx->kuota = $empty->isEmpty() ? $max - 1 : ($check_sk->isEmpty() && $check_deskripsi->isEmpty() ? $latest - 1 : $latest);
-        
-        if ($trx->kuota < 0) 
-        {
-            alert()->html('Gagal','<a href="/api/export" target="_blank"><b>Download</b></a> riwayat penerimaan honorarium.','error');
+        $trx->kuota = $empty->isEmpty() ? $max - 1 : ($check_deskripsi->isEmpty() ? $latest - 1 : $latest);
+
+        if ($trx->kuota < 0) {
+            alert()->html('Gagal', '<a href="/api/export" target="_blank"><b>Download</b></a> riwayat penerimaan honorarium.', 'error');
             return view('layouts.transaksi.create');
         }
 
@@ -88,16 +88,34 @@ class TrxController extends Controller
         $id = $request->id;
         $trx = DB::table('transaksi')
             ->join('jabatan', 'transaksi.id_jabatan', '=', 'jabatan.id_jbt')
-            ->join('pegawai', 'pegawai.id_pg', '=', 'transaksi.id_pegawai')
+            ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
             ->where('pegawai.status', '=', 1)
-            ->orderBy('transaksi.created_at', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->where('transaksi.id_trx', '=', $id)
             ->get();
         
         return view('layouts.transaksi.edit', [
-            'trx' => $trx,
+            'trx' => $trx
         ]);
+    }
+
+    public function update(Request $request)
+    {
+        $rules = [
+            'no_sk' => 'required',
+        ];
+        $msg = [
+            'required' => 'The :attribute field is required.'
+        ];
+
+        $this->validate($request, $rules, $msg);
+        
+        DB::table('transaksi')->where('id_trx', $request->id)->update([
+            'no_sk' => $request->no_sk,
+            'tanggal_penerimaan' => $request->tanggal_penerimaan
+        ]);
+
+        return Redirect::to('/api/trx');
     }
 
     public function destroy($id)
@@ -111,6 +129,8 @@ class TrxController extends Controller
 
     public function export()
     {
-        return Excel::download(new TransaksiExport, 'riwayat_transaksi.xlsx');
+        dd($this->id_pg);
+        die();
+        return Excel::download(new TransaksiExport($this->id_pg), 'riwayat_transaksi.xlsx');
     }
 }

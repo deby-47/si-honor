@@ -144,7 +144,7 @@
                     <th scope="col" class="sort">Action</th>
                   </tr>
                 </thead>
-                @php $counter = 0 @endphp@php $counter = 0 @endphp
+                @php $counter = 0 @endphp
                 <tbody class="list">
                   @foreach ($trx as $t)
                   <tr>
@@ -205,7 +205,7 @@
                       </div>
                     </th>
                     <td>
-                      <a class="btn btn-xs btn-primary" href="/api/trx/{{ DB::table('transaksi')->select('id_trx')->value('id_trx') }}/edit">Ubah</a>
+                      <a class="btn btn-xs btn-primary" href="/api/trx/{{ $t->id_trx }}/edit">Ubah</a>
                       <form method="POST" action="{{ route('trx_hapus', $t->id_trx) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">
