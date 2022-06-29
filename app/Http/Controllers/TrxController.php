@@ -21,10 +21,10 @@ class TrxController extends Controller
             ->where('pegawai.status', '=', 1)
             ->orderBy('transaksi.created_at', 'ASC')
             ->where('transaksi.status', '=', 1)
-            ->get();
+            ->paginate(10);
 
         return view('layouts.transaksi.index', [
-            'trx' => $trx->sortBy('id_trx'),
+            'trx' => $trx,
         ]); //return with view
     }
 
@@ -35,9 +35,6 @@ class TrxController extends Controller
 
     public function store(Request $request)
     {
-        // if($request->input('id_pegawai')){
-        //     Session::set('id_pg',$request->input('id_pegawai'));
-        // }
         $jabatan = DB::table('pegawai')
             ->where('id', '=', $request->input('id_pegawai'))
             ->value('jabatan');

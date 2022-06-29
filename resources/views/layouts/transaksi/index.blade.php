@@ -200,7 +200,7 @@
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm" >{{ $t->kuota }}</span>
+                          <span class="name mb-0 text-sm">{{ $t->kuota }}</span>
                         </div>
                       </div>
                     </th>
@@ -218,6 +218,9 @@
                   @endforeach
                 </tbody>
               </table>
+            </div>
+            <div class="card-header border-0">
+              <h3 class="mb-0">{{ $trx->links() }}</h3>
             </div>
             <!-- Card footer -->
             <div class="card-footer py-4">

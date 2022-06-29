@@ -37,7 +37,7 @@ class TransaksiExport implements FromCollection, WithHeadings
                join jabatan jb on trx.id_jabatan = jb.id_jbt
                join pegawai pg on trx.id_pegawai = pg.id
                where pg.status = 1 and trx.status = 1 and trx.id_pegawai = :id_pg
-               order by trx.created_at
+               order by trx.tanggal_penerimaan
         "), ['id_pg' => $this->id]);
         
         return collect($res);

@@ -58,7 +58,8 @@
                         <label for="jabatan">Jabatan</label><br/>
                             @php $jbt = App\Models\Jabatan::selectJbt(); @endphp
                             <select class="custom-select" name="jabatan" id="jabatan" required>
-                                <option selected disabled>{{ $pgs->kode }}</option>
+                                <!-- <option selected disabled>{{ $pgs->kode }}</option> -->
+                                <option selected disabled>Pilih Jabatan</option>
                                 @foreach ($jbt as $j)
                                 <option value="{{ $j->id_jbt }}">{{ $j->kode }}</option>
                                 @endforeach
