@@ -176,13 +176,14 @@
                     <th scope="col" class="sort">Action</th>
                   </tr>
                 </thead>
+                @php $counter = 0 @endphp
                 <tbody class="list">
                   @foreach ($pg as $pgs)
                   <tr>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $pgs->id }}</span>
+                          <span class="name mb-0 text-sm">{{ $counter += 1 }}</span>
                         </div>
                       </div>
                     </th>

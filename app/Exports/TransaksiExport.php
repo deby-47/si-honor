@@ -2,8 +2,6 @@
 
 namespace App\Exports;
 
-use App\Models\Transaksi;
-use Maatwebsite\Excel\Concerns\FromQuery;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;

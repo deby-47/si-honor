@@ -9,16 +9,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Illuminate\Support\Facades\Session;
 
 class TrxController extends Controller
 {
-    private $id_pg;
-
-    public function __construct()
-    {
-        $this->id_pg;
-    }
     public function index()
     {
         $trx = DB::table('transaksi')
@@ -41,6 +35,9 @@ class TrxController extends Controller
 
     public function store(Request $request)
     {
+        // if($request->input('id_pegawai')){
+        //     Session::set('id_pg',$request->input('id_pegawai'));
+        // }
         $jabatan = DB::table('pegawai')
             ->where('id', '=', $request->input('id_pegawai'))
             ->value('jabatan');
@@ -65,7 +62,9 @@ class TrxController extends Controller
 
         $trx = new Transaksi;
         $trx->id_pegawai = $request->input('id_pegawai');
-        $this->id_pg = $trx->id_pegawai;
+        Session::put('id_pgs', $trx->id_pegawai);
+        Session::save();
+        
         $trx->id_jabatan = $jabatan;
         $trx->no_sk = $request->no_sk;
         $trx->deskripsi = $request->deskripsi;
@@ -73,14 +72,15 @@ class TrxController extends Controller
         $trx->tanggal_penerimaan = $request->input('tanggal_penerimaan');
         $trx->kuota = $empty->isEmpty() ? $max - 1 : ($check_deskripsi->isEmpty() ? $latest - 1 : $latest);
 
-        if ($trx->kuota < 0) {
-            alert()->html('Gagal', '<a href="/api/export" target="_blank"><b>Download</b></a> riwayat penerimaan honorarium.', 'error');
+        if ($trx->kuota < 0) 
+        {
+            alert()->html('Gagal', '<a href="/api/export" target="_blank"><b>Download</b></a> riwayat penerimaan honorarium.', 'error')->persistent(true);
             return view('layouts.transaksi.create');
         }
 
         $trx->save();
         Alert::success('Sukses!', 'Data berhasil tersimpan');
-        return view('layouts.transaksi.create');
+        return view('layouts.transaksi.create')->with('id_pg', $trx->id_pegawai);
     }
 
     public function edit(Request $request)
@@ -129,8 +129,7 @@ class TrxController extends Controller
 
     public function export()
     {
-        dd($this->id_pg);
-        die();
-        return Excel::download(new TransaksiExport($this->id_pg), 'riwayat_transaksi.xlsx');
+        $id = Session::get('id_pgs');
+        return Excel::download(new TransaksiExport($id), 'riwayat_transaksi.xlsx');
     }
 }

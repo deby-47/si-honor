@@ -94,7 +94,7 @@ class PegawaiController extends Controller
             'nip' => $request->nip,
             'no_rekening' => $request->no_rekening,
             'nama' => $request->nama,
-            'jabatan' => $request->input('jabatan')
+            'jabatan' => $request->get('jabatan')
         ]);
 
         return Redirect::to('/api/pegawai');
