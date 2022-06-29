@@ -19,10 +19,11 @@ class PegawaiController extends Controller
         $pgs = DB::table('pegawai')
             ->join('jabatan', 'pegawai.jabatan', '=', 'jabatan.id_jbt')
             ->where('pegawai.status', '=', 1)
-            ->get();
+            ->orderBy('pegawai.nama', 'ASC')
+            ->paginate(10);
 
         return view('layouts.pegawai.index', [
-            'pg' => $pgs->sortBy('id'),
+            'pg' => $pgs,
         ]); //return with view
     }
 

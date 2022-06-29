@@ -144,14 +144,13 @@
                     <th scope="col" class="sort">Action</th>
                   </tr>
                 </thead>
-                @php $counter = 0 @endphp
                 <tbody class="list">
-                  @foreach ($trx as $t)
+                  @foreach ($trx as $key => $t)
                   <tr>
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $counter += 1 }}</span>
+                          <span class="name mb-0 text-sm">{{ ($trx->currentpage()-1) * $trx->perpage() + $key + 1 }}</span>
                         </div>
                       </div>
                     </th>
@@ -219,32 +218,11 @@
                 </tbody>
               </table>
             </div>
-            <div class="card-header border-0">
-              <h3 class="mb-0">{{ $trx->links() }}</h3>
-            </div>
             <!-- Card footer -->
             <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">
-                      <i class="fas fa-angle-left"></i>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      <i class="fas fa-angle-right"></i>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
+                  <h3 class="mb-0">{{ $trx->links() }}</h3>
                 </ul>
               </nav>
             </div>
