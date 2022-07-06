@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
 use App\Models\Jabatan;
 use App\Models\Pegawai;
@@ -44,10 +45,10 @@ class PegawaiController extends Controller
         ];
 
         $this->validate($request, $rules, $msg);
-        
+
         $pg = new Pegawai;
         $pg->nip = $request->nip;
-        $pg->no_rekening = $request->no_rekening;
+        $pg->instansi = $request->instansi;
         $pg->nama = $request->nama;
         $pg->jabatan = $request->input('jabatan');
         $pg->save();
@@ -90,14 +91,60 @@ class PegawaiController extends Controller
         ];
 
         $this->validate($request, $rules, $msg);
-        
+
         DB::table('pegawai')->where('id', $request->id)->update([
             'nip' => $request->nip,
-            'no_rekening' => $request->no_rekening,
+            'instansi' => $request->instansi,
             'nama' => $request->nama,
             'jabatan' => $request->get('jabatan')
         ]);
 
         return Redirect::to('/api/pegawai');
+    }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $output = '';
+            $query = $request->get('query');
+            if ($query != '') {
+                $data = DB::table('pegawai')
+                    ->where('nama', 'like', '%' . $query . '%')
+                    ->orWhere('nip', 'like', '%' . $query . '%')
+                    ->orWhere('instansi', 'like', '%' . $query . '%')
+                    ->orWhere('jabatan', 'like', '%' . $query . '%')
+                    ->orderBy('nama')
+                    ->get();
+            } else {
+                $data = DB::table('pegawai')
+                    ->orderBy('nip')
+                    ->get();
+            }
+            $total_row = $data->count();
+            if ($total_row > 0) {
+                foreach ($data as $row) {
+                    $output .= '
+                    <tr>
+                        <td>' . $row->nip . '</td>
+                        <td>' . $row->nama . '</td>
+                        <td>' . $row->kode . '</td>
+                        <td>' . $row->instansi . '</td>
+                    </tr>
+                    ';
+                }
+            } else {
+                $output = '
+                <tr>
+                     <td align="center" colspan="5">No Data Found</td>
+                 </tr>
+                ';
+            }
+            $data = array(
+                'table_data'  => $output,
+                'total_data'  => $total_row
+               );
+               
+            echo json_encode($data);
+        }
     }
 }

@@ -21,6 +21,7 @@ Route::post('/pegawai/tambah', [PegawaiController::class, 'store']); // save to 
 Route::post('/pegawai/hapus/{id}', [PegawaiController::class, 'destroy'])->name('hapus');
 Route::get('/pegawai/{id}/edit', [PegawaiController::class, 'edit'])->name('edit_pg'); // show form
 Route::post('/pegawai/{id}/edit', [PegawaiController::class, 'update'])->name('update_pg'); // save to db
+Route::get('/pegawai/search', [PegawaiController::class, 'search'])->name('search_pg');
 
 Route::get('/export', [TrxController::class, 'export'])->name('export');
 Route::get('/trx', [TrxController::class, 'index']);
@@ -30,3 +31,4 @@ Route::post('/trx/tambah', [TrxController::class, 'store']); // save to db
 Route::get('/trx/{id}/edit', [TrxController::class, 'edit'])->name('edit_trx');
 Route::post('/trx/{id}/edit', [TrxController::class, 'update'])->name('update_trx');
 Route::post('/trx/hapus/{id}', [TrxController::class, 'destroy'])->name('trx_hapus');
+

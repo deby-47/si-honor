@@ -45,7 +45,7 @@
                             <label for="id_pegawai">Pegawai</label>
                             <select class="custom-select" name="id_pegawai" required>
                                 <option selected>Pilih Pegawai</option>
-                                @foreach (App\Models\Pegawai::selectPegawai() as $pg)
+                                @foreach (App\Models\Pegawai::selectPegawai()->sortBy('nama') as $pg)
                                 <option value="{{ $pg->id }}">{{ $pg->nama }}</option>
                                 @endforeach
                             </select>

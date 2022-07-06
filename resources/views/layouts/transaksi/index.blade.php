@@ -134,9 +134,11 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col" class="sort" data-sort="no">No</th>
+                    <th scope="col" class="sort" data-sort="pegawai">NIP</th>
                     <th scope="col" class="sort" data-sort="pegawai">Pegawai</th>
+                    <th scope="col" class="sort" data-sort="pegawai">Instansi</th>
                     <th scope="col" class="sort" data-sort="jabatan">Jabatan</th>
-                    <th scope="col" class="sort" data-sort="tanggal">Tanggal Penerimaan</th>
+                    <th scope="col" class="sort" data-sort="tanggal">Tanggal SP2D</th>
                     <th scope="col" class="sort" data-sort="sk">No SK</th>
                     <th scope="col" class="sort" data-sort="deskripsi">Deskripsi Kegiatan</th>
                     <th scope="col" class="sort" data-sort="jumlah">Jumlah</th>
@@ -157,7 +159,21 @@
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->nip }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
                           <span class="name mb-0 text-sm">{{ $t->nama }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->instansi }}</span>
                         </div>
                       </div>
                     </th>
@@ -192,7 +208,8 @@
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $t->jumlah }}</span>
+                          @php $jumlah = "Rp" . number_format($t->jumlah, 2, ',','.'); @endphp
+                          <span class="name mb-0 text-sm">{{ $jumlah }}</span>
                         </div>
                       </div>
                     </th>

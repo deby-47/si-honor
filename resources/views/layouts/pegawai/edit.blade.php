@@ -47,12 +47,12 @@
                             <input value="{{ $pgs->nip }}" id="nip" type="text" class="form-control" name="nip" placeholder="NIP" required>
                         </div>
                         <div class="form-group">
-                            <label for="no_rekening">No Rekening</label>
-                            <input value="{{ $pgs->no_rekening }}" id="no_rekening" type="text" class="form-control" name="no_rekening" placeholder="No Rekening">
-                        </div>
-                        <div class="form-group">
                             <label for="nama">Nama</label>
                             <input value="{{ $pgs->nama }}" id="nama" type="text" class="form-control" name="nama" placeholder="Nama" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="instansi">Instansi</label>
+                            <input value="{{ $pgs->instansi }}" id="instansi" type="text" class="form-control" name="instansi" placeholder="No Rekening">
                         </div>
                         <div class="form-group">
                         <label for="jabatan">Jabatan</label><br/>

@@ -19,6 +19,7 @@
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
   <link rel="stylesheet" href="/docs/assets/vendor/sweetalert2/dist/sweetalert2.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -164,15 +165,25 @@
             </div>
             <!-- Light table -->
             <div class="table-responsive">
+              <div class="col-auto mb-3">
+                <div class="input-group-prepend">
+                  <img width="25" height="35" src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/zeus/kratos/af2f34c3.svg" alt="">
+                  <span>
+                    <div class="col-auto">
+                      <input type="search" class="form-control" id="search" placeholder="Search...">
+                    </div>
+                  </span>
+                </div>
+              </div>
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
                     <th scope="col" class="sort" data-sort="no">No</th>
-                    <th scope="col" class="sort" data-sort="no_rek">No Rekening</th>
                     <th scope="col" class="sort" data-sort="nip">NIP</th>
                     <th scope="col" class="sort" data-sort="nama">Nama</th>
+                    <th scope="col" class="sort" data-sort="instansi">Instansi</th>
                     <th scope="col" class="sort" data-sort="jabatan">Jabatan</th>
-                    <th scope="col" class="sort" data-sort="kuota">Kuota Honor</th>
+                    <th scope="col" class="sort" data-sort="kuota">Kuota Honorarium</th>
                     <th scope="col" class="sort">Action</th>
                   </tr>
                 </thead>
@@ -186,13 +197,6 @@
                         </div>
                       </div>
                     </th>
-                    <th scope="row">
-                      <div class="media align-items-center">
-                        <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $pgs->no_rekening }}</span>
-                        </div>
-                      </div>
-                    </th>
                     <td>
                       <div class="d-flex align-items-center">
                         <span class="completion mr-2">{{ $pgs->nip }}</span>
@@ -202,9 +206,12 @@
                       {{ $pgs->nama }}
                     </td>
                     <td class="jabatan">
+                      {{ $pgs->instansi }}
+                    </td>
+                    <td class="jabatan">
                       {{ $pgs->kode }}
                     </td>
-                    <td class="max_kuota">
+                    <td class="jabatan">
                       {{ $pgs->max_kuota }}
                     </td>
                     <td>
@@ -255,6 +262,37 @@
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
 
+  <script>
+    $(document).ready(function() {
+
+      fetch_customer_data();
+
+      $(document).on('keyup', '#search', function() {
+        var query = $(this).val();
+        fetch_customer_data(query);
+      });
+
+      function fetch_customer_data(query) {
+        $.ajax({
+          url: "{{ url('api/pegawai/search') }}",
+          method: 'GET',
+          data: {
+            'query': query
+          },
+          dataType: 'json',
+          success: function(data) {
+            console.log(data)
+            $('tbody').html(data.table_data);
+            $('#total_records').text(data.total_data);
+          }
+          error: (error) => {
+            console.log(JSON.stringify(error));
+          }
+        })
+      }
+
+    });
+  </script>
 </body>
 
 </html>

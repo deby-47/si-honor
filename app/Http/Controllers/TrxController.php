@@ -19,7 +19,7 @@ class TrxController extends Controller
             ->join('jabatan', 'transaksi.id_jabatan', '=', 'jabatan.id_jbt')
             ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
             ->where('pegawai.status', '=', 1)
-            ->orderBy('transaksi.created_at', 'ASC')
+            ->orderBy('pegawai.nama', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->paginate(10);
 
