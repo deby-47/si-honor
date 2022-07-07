@@ -16,17 +16,7 @@ class Pegawai extends Model
     public function selectPegawai()
     {
         $pg = DB::table('pegawai')
-            ->select('id', 'nama')
-            ->where('status', '=', 1)
-            ->get();
-
-        return $pg;
-    }
-
-    public function selectNip()
-    {
-        $pg = DB::table('pegawai')
-            ->select('id', 'nip')
+            ->select('id', 'nip', 'instansi', 'nama')
             ->where('status', '=', 1)
             ->get();
 

@@ -54,7 +54,7 @@
                             <select class="custom-select" name="id_pegawai" id="id_pegawai" required>
                                 <option selected>Pilih Pegawai</option>
                                 @foreach (App\Models\Pegawai::selectPegawai()->sortBy('nama') as $pg)
-                                <option value="{{ $pg->id }}">{{ $pg->nama }}</option>
+                                <option value="{{ $pg->id }}">{{ $pg->nama . " - " . $pg->nip . " - " . $pg->instansi}}</option>
                                 @endforeach
                             </select>
                         </div>
