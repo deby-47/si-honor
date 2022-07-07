@@ -15,13 +15,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/api/pegawai">
+                            <a class="nav-link" href="/pegawai">
                                 <i class="ni ni-bullet-list-67 text-default"></i>
                                 <span class="nav-link-text">Daftar Pegawai</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('table') }}">
+                            <a class="nav-link" href="/trx">
                                 <i class="ni ni-bullet-list-67 text-default"></i>
                                 <span class="nav-link-text">Daftar Honorarium</span>
                             </a>
@@ -46,8 +46,8 @@
                             <input id="nip" type="text" class="form-control" name="nip" placeholder="NIP" required>
                         </div>
                         <div class="form-group">
-                            <label for="no_rekening">No Rekening</label>
-                            <input id="no_rekening" type="text" class="form-control" name="no_rekening" placeholder="No Rekening">
+                            <label for="instansi">Instansi</label>
+                            <input id="instansi" type="text" class="form-control" name="instansi" placeholder="Instansi">
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama</label>

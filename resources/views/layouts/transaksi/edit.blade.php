@@ -15,13 +15,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/api/pegawai">
+                            <a class="nav-link" href="/pegawai">
                                 <i class="ni ni-bullet-list-67 text-default"></i>
                                 <span class="nav-link-text">Daftar Pegawai</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/api/trx">
+                            <a class="nav-link" href="/trx">
                                 <i class="ni ni-bullet-list-67 text-default"></i>
                                 <span class="nav-link-text">Daftar Honorarium</span>
                             </a>

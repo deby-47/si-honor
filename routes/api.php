@@ -31,4 +31,6 @@ Route::post('/trx/tambah', [TrxController::class, 'store']); // save to db
 Route::get('/trx/{id}/edit', [TrxController::class, 'edit'])->name('edit_trx');
 Route::post('/trx/{id}/edit', [TrxController::class, 'update'])->name('update_trx');
 Route::post('/trx/hapus/{id}', [TrxController::class, 'destroy'])->name('trx_hapus');
+Route::get('/trx/search',[TrxController::class, 'search']);
+Route::get('/trx/kuota/{id}',[TrxController::class, 'getKuota']);
 

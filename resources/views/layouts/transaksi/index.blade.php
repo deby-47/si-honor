@@ -39,13 +39,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/api/pegawai">
+              <a class="nav-link" href="/pegawai">
                 <i class="ni ni-bullet-list-67 text-default"></i>
                 <span class="nav-link-text">Daftar Pegawai</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/api/trx">
+              <a class="nav-link" href="/trx">
                 <i class="ni ni-bullet-list-67 text-default"></i>
                 <span class="nav-link-text">Daftar Honorarium</span>
               </a>
@@ -113,7 +113,7 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="/api/trx/tambah" class="btn btn-sm btn-neutral">Tambah Transaksi</a>
+              <a href="/trx/tambah" class="btn btn-sm btn-neutral">Tambah Transaksi</a>
             </div>
           </div>
         </div>
@@ -130,6 +130,18 @@
             </div>
             <!-- Light table -->
             <div class="table-responsive">
+              <form action="/trx/search" method="GET">
+                <div class="col-auto mb-3">
+                  <div class="input-group-prepend">
+                    <span>
+                      <div class="col-auto">
+                        <input type="text" name="search" class="form-control" id="search" placeholder="Search..." value="{{ old('search') }}">
+                      </div>
+                    </span>
+                    <button id="search" type="submit" class="btn btn-primary">Cari</button>
+                  </div>
+                </div>
+              </form>
               <table class="table align-items-center table-flush" counter-increment: 1>
                 <thead class="thead-light">
                   <tr>
@@ -140,6 +152,7 @@
                     <th scope="col" class="sort" data-sort="jabatan">Jabatan</th>
                     <th scope="col" class="sort" data-sort="tanggal">Tanggal SP2D</th>
                     <th scope="col" class="sort" data-sort="sk">No SK</th>
+                    <th scope="col" class="sort" data-sort="spm">No SPM</th>
                     <th scope="col" class="sort" data-sort="deskripsi">Deskripsi Kegiatan</th>
                     <th scope="col" class="sort" data-sort="jumlah">Jumlah</th>
                     <th scope="col" class="sort" data-sort="kuota">Kuota Honorarium</th>
@@ -201,6 +214,13 @@
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->no_spm }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
                           <span class="name mb-0 text-sm">{{ $t->deskripsi }}</span>
                         </div>
                       </div>
@@ -221,7 +241,7 @@
                       </div>
                     </th>
                     <td>
-                      <a class="btn btn-xs btn-primary" href="/api/trx/{{ $t->id_trx }}/edit">Ubah</a>
+                      <a class="btn btn-xs btn-primary" href="/trx/{{ $t->id_trx }}/edit">Ubah</a>
                       <form method="POST" action="{{ route('trx_hapus', $t->id_trx) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">

@@ -43,13 +43,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/api/pegawai">
+              <a class="nav-link" href="/pegawai">
                 <i class="ni ni-bullet-list-67 text-default"></i>
                 <span class="nav-link-text">Daftar Pegawai</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/api/trx">
+              <a class="nav-link" href="/trx">
                 <i class="ni ni-bullet-list-67 text-default"></i>
                 <span class="nav-link-text">Daftar Honorarium</span>
               </a>
@@ -148,7 +148,7 @@
               </nav>
             </div>
             <div class="col-lg-6 col-5 text-right">
-              <a href="/api/pegawai/tambah" class="btn btn-sm btn-neutral">Tambah Pegawai</a>
+              <a href="/pegawai/tambah" class="btn btn-sm btn-neutral">Tambah Pegawai</a>
             </div>
           </div>
         </div>
@@ -165,16 +165,18 @@
             </div>
             <!-- Light table -->
             <div class="table-responsive">
-              <div class="col-auto mb-3">
-                <div class="input-group-prepend">
-                  <img width="25" height="35" src="https://assets.tokopedia.net/assets-tokopedia-lite/v2/zeus/kratos/af2f34c3.svg" alt="">
-                  <span>
-                    <div class="col-auto">
-                      <input type="search" class="form-control" id="search" placeholder="Search...">
-                    </div>
-                  </span>
+              <form action="/pegawai/search" method="GET">
+                <div class="col-auto mb-3">
+                  <div class="input-group-prepend">
+                    <span>
+                      <div class="col-auto">
+                        <input type="text" name="search" class="form-control" id="search" placeholder="Search..." value="{{ old('search') }}">
+                      </div>
+                    </span>
+                    <button id="search" type="submit" class="btn btn-primary">Cari</button>
+                  </div>
                 </div>
-              </div>
+              </form>
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
@@ -215,7 +217,7 @@
                       {{ $pgs->max_kuota }}
                     </td>
                     <td>
-                      <a class="btn btn-xs btn-primary" href="/api/pegawai/{{ $pgs->id }}/edit">Ubah</a>
+                      <a class="btn btn-xs btn-primary" href="/pegawai/{{ $pgs->id }}/edit">Ubah</a>
                       <form method="POST" action="{{ route('hapus', $pgs->id) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">
@@ -261,38 +263,6 @@
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
-
-  <script>
-    $(document).ready(function() {
-
-      fetch_customer_data();
-
-      $(document).on('keyup', '#search', function() {
-        var query = $(this).val();
-        fetch_customer_data(query);
-      });
-
-      function fetch_customer_data(query) {
-        $.ajax({
-          url: "{{ url('api/pegawai/search') }}",
-          method: 'GET',
-          data: {
-            'query': query
-          },
-          dataType: 'json',
-          success: function(data) {
-            console.log(data)
-            $('tbody').html(data.table_data);
-            $('#total_records').text(data.total_data);
-          }
-          error: (error) => {
-            console.log(JSON.stringify(error));
-          }
-        })
-      }
-
-    });
-  </script>
 </body>
 
 </html>

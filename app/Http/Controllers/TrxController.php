@@ -19,7 +19,7 @@ class TrxController extends Controller
             ->join('jabatan', 'transaksi.id_jabatan', '=', 'jabatan.id_jbt')
             ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
             ->where('pegawai.status', '=', 1)
-            ->orderBy('pegawai.nama', 'ASC')
+            ->orderBy('transaksi.id_trx', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->paginate(10);
 
@@ -61,18 +61,19 @@ class TrxController extends Controller
         $trx->id_pegawai = $request->input('id_pegawai');
         Session::put('id_pgs', $trx->id_pegawai);
         Session::save();
-        
+
         $trx->id_jabatan = $jabatan;
         $trx->no_sk = $request->no_sk;
+        $trx->no_spm = $request->no_spm;
         $trx->deskripsi = $request->deskripsi;
         $trx->jumlah = $request->jumlah;
         $trx->tanggal_penerimaan = $request->input('tanggal_penerimaan');
         $trx->kuota = $empty->isEmpty() ? $max - 1 : ($check_deskripsi->isEmpty() ? $latest - 1 : $latest);
 
-        if ($trx->kuota < 0) 
-        {
-            alert()->html('Gagal', '<a href="/api/export" target="_blank"><b>Download</b></a> riwayat penerimaan honorarium.', 'error')->persistent(true);
-            return view('layouts.transaksi.create');
+        if ($trx->kuota < 0) {
+            $trx->save();
+            alert()->html('Penerimaan Honorarium Melebihi Batas', '<a href="/export" target="_blank"><b>Download</b></a> riwayat penerimaan honorarium.', 'warning')->persistent(true);
+            return view('layouts.transaksi.create')->with('id_pg', $trx->id_pegawai);
         }
 
         $trx->save();
@@ -90,7 +91,7 @@ class TrxController extends Controller
             ->where('transaksi.status', '=', 1)
             ->where('transaksi.id_trx', '=', $id)
             ->get();
-        
+
         return view('layouts.transaksi.edit', [
             'trx' => $trx
         ]);
@@ -106,13 +107,13 @@ class TrxController extends Controller
         ];
 
         $this->validate($request, $rules, $msg);
-        
+
         DB::table('transaksi')->where('id_trx', $request->id)->update([
             'no_sk' => $request->no_sk,
             'tanggal_penerimaan' => $request->tanggal_penerimaan
         ]);
 
-        return Redirect::to('/api/trx');
+        return Redirect::to('/trx');
     }
 
     public function destroy($id)
@@ -121,12 +122,54 @@ class TrxController extends Controller
             'status' => 0
         ]);
 
-        return Redirect::to('/api/trx');
+        return Redirect::to('/trx');
     }
 
     public function export()
     {
         $id = Session::get('id_pgs');
         return Excel::download(new TransaksiExport($id), 'riwayat_transaksi.xlsx');
+    }
+
+    public function getKuota($id)
+    {
+        $check_pg = DB::table('transaksi')->where('id_pegawai', '=', $id)->get();
+        if (!$check_pg->isEmpty()) 
+        {
+            $latest = DB::table('transaksi')
+                ->where('id_pegawai', '=', $id)
+                ->orderBy('created_at', 'DESC')->limit(1)
+                ->where('status', '=', 1)
+                ->value('kuota');
+        } else {
+            $jabatan = DB::table('pegawai')
+                ->where('id', '=', $id)
+                ->value('jabatan');
+            $latest = DB::table('jabatan')
+                ->where('id_jbt', '=', $jabatan)
+                ->value('max_kuota');
+        }
+
+        return response()->json($latest);
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+        $pg = DB::table('pegawai')
+            ->where('nama', 'LIKE', '%' . $search . '%')
+            ->pluck('id');
+        $transaksi = DB::table('transaksi')
+            ->join('jabatan', 'transaksi.id_jabatan', '=', 'jabatan.id_jbt')
+            ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
+            ->where('pegawai.status', '=', 1)
+            ->whereIn('id_pegawai', collect($pg))
+            ->orderBy('transaksi.deskripsi', 'ASC')
+            ->where('transaksi.status', '=', 1)
+            ->paginate();
+
+        return view('layouts.transaksi.index', [
+            'trx' => $transaksi,
+        ]);
     }
 }

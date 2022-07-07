@@ -5,8 +5,10 @@ namespace App\Exports;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class TransaksiExport implements FromCollection, WithHeadings
+class TransaksiExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStrictNullComparison
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -16,28 +18,30 @@ class TransaksiExport implements FromCollection, WithHeadings
     function __construct($id) 
     {
         $this->id = $id;
-    } 
+    }
 
     public function headings(): array
     {
         return ["NIP", 
         "Nama Pegawai", 
         "Jabatan",
-        "Nomor SK", 
+        "Instansi",
+        "Nomor SPM", 
         "Deskripsi", 
         "Jumlah", 
-        "Tanggal Penerimaan"];
+        "Tanggal Penerimaan",
+        "Kuota Tersisa"];
     }
 
     public function collection()
     {
-        $res = DB::select(DB::raw("select pg.nip, pg.nama, jb.kode, trx.no_sk, trx.deskripsi, 
-               trx.jumlah, trx.tanggal_penerimaan
+        $res = DB::select(DB::raw("select pg.nip, pg.nama, jb.kode, pg.instansi, trx.no_spm, trx.deskripsi, 
+               trx.jumlah, trx.tanggal_penerimaan, trx.kuota
                from transaksi trx 
                join jabatan jb on trx.id_jabatan = jb.id_jbt
                join pegawai pg on trx.id_pegawai = pg.id
                where pg.status = 1 and trx.status = 1 and trx.id_pegawai = :id_pg
-               order by trx.tanggal_penerimaan
+               order by trx.kuota
         "), ['id_pg' => $this->id]);
         
         return collect($res);

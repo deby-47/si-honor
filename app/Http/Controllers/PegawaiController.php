@@ -7,6 +7,7 @@ use App\Models\Jabatan;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PegawaiController extends Controller
 {
@@ -53,7 +54,8 @@ class PegawaiController extends Controller
         $pg->jabatan = $request->input('jabatan');
         $pg->save();
 
-        return Redirect::to('/api/pegawai');
+        Alert::success('Sukses!', 'Data berhasil tersimpan');
+        return view('layouts.pegawai.create');
     }
 
     public function destroy($id)
@@ -63,7 +65,7 @@ class PegawaiController extends Controller
             'status' => 0
         ]);
 
-        return Redirect::to('/api/pegawai');
+        return Redirect::to('/pegawai');
     }
 
     public function edit(Request $request)
@@ -99,52 +101,22 @@ class PegawaiController extends Controller
             'jabatan' => $request->get('jabatan')
         ]);
 
-        return Redirect::to('/api/pegawai');
+        return Redirect::to('/pegawai');
     }
 
     public function search(Request $request)
     {
-        if ($request->ajax()) {
-            $output = '';
-            $query = $request->get('query');
-            if ($query != '') {
-                $data = DB::table('pegawai')
-                    ->where('nama', 'like', '%' . $query . '%')
-                    ->orWhere('nip', 'like', '%' . $query . '%')
-                    ->orWhere('instansi', 'like', '%' . $query . '%')
-                    ->orWhere('jabatan', 'like', '%' . $query . '%')
-                    ->orderBy('nama')
-                    ->get();
-            } else {
-                $data = DB::table('pegawai')
-                    ->orderBy('nip')
-                    ->get();
-            }
-            $total_row = $data->count();
-            if ($total_row > 0) {
-                foreach ($data as $row) {
-                    $output .= '
-                    <tr>
-                        <td>' . $row->nip . '</td>
-                        <td>' . $row->nama . '</td>
-                        <td>' . $row->kode . '</td>
-                        <td>' . $row->instansi . '</td>
-                    </tr>
-                    ';
-                }
-            } else {
-                $output = '
-                <tr>
-                     <td align="center" colspan="5">No Data Found</td>
-                 </tr>
-                ';
-            }
-            $data = array(
-                'table_data'  => $output,
-                'total_data'  => $total_row
-               );
-               
-            echo json_encode($data);
-        }
+        $search = $request->search;
+
+        $pgs = DB::table('pegawai')
+            ->join('jabatan', 'pegawai.jabatan', '=', 'jabatan.id_jbt')
+            ->where('nama', 'LIKE', '%' . $search . '%')
+            ->where('pegawai.status', '=', 1)
+            ->orderBy('pegawai.nama', 'ASC')
+            ->paginate(10);
+
+        return view('layouts.pegawai.index', [
+            'pg' => $pgs,
+        ]);
     }
 }

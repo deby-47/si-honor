@@ -1,5 +1,13 @@
 @extends('layouts.pegawai.app')
+<html>
 <title>Tambah Transaksi</title>
+<style>
+    .box-form {
+        max-height: 600px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+</style>
 
 <body>
     <nav class="sidenav navbar navbar-verticaL fixed-left navbar-expand-xs navbar-light" id="sidenav-main">
@@ -15,13 +23,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/api/pegawai">
+                            <a class="nav-link" href="/pegawai">
                                 <i class="ni ni-bullet-list-67 text-default"></i>
                                 <span class="nav-link-text">Daftar Pegawai</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/api/trx">
+                            <a class="nav-link" href="/trx">
                                 <i class="ni ni-bullet-list-67 text-default"></i>
                                 <span class="nav-link-text">Daftar Honorarium</span>
                             </a>
@@ -40,15 +48,19 @@
         <div class="container-fluid mt--7">
             <div class="header-body mt-7 mb-7">
                 <div class="col-xs-6" style="position:fixed; left: 300px; right: 80px;">
-                    <form method="POST">
+                    <form method="POST" class="box-form">
                         <div class="form-group">
                             <label for="id_pegawai">Pegawai</label>
-                            <select class="custom-select" name="id_pegawai" required>
+                            <select class="custom-select" name="id_pegawai" id="id_pegawai" required>
                                 <option selected>Pilih Pegawai</option>
                                 @foreach (App\Models\Pegawai::selectPegawai()->sortBy('nama') as $pg)
                                 <option value="{{ $pg->id }}">{{ $pg->nama }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="kuota">Sisa Kuota Penerimaan Honorarium</label>
+                            <input id="kuota" type="text" class="form-control" name="kuota" disabled>
                         </div>
                         <!-- <div class="form-group">
                             <label for="jabatan">Jabatan</label><br />
@@ -62,6 +74,10 @@
                         <div class="form-group">
                             <label for="no_sk">No SK</label>
                             <input id="no_sk" type="text" class="form-control" name="no_sk" placeholder="No SK" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="no_spm">No SPM</label>
+                            <input id="no_spm" type="text" class="form-control" name="no_spm" placeholder="No SPM" required>
                         </div>
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi Kegiatan</label>
@@ -82,5 +98,30 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_pegawai').on('change', function() {
+                var pegawaiID = $(this).val();
+                console.log('view', pegawaiID);
+                if (pegawaiID) {
+                    $.ajax({
+                        url: '/trx/kuota/' + pegawaiID,
+                        dataType: 'JSON',
+                        type: "GET",
+                        data: {
+                            "id": pegawaiID
+                        },
+                        success: function(response) {
+                            console.log('success', response)
+                            document.getElementById('kuota').value = response;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>
