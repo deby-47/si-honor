@@ -154,6 +154,7 @@
                     <th scope="col" class="sort" data-sort="sk">No SK</th>
                     <th scope="col" class="sort" data-sort="spm">No SPM</th>
                     <th scope="col" class="sort" data-sort="deskripsi">Deskripsi Kegiatan</th>
+                    <th scope="col" class="sort" data-sort="deskripsi">Keterangan</th>
                     <th scope="col" class="sort" data-sort="jumlah">Jumlah</th>
                     <th scope="col" class="sort" data-sort="kuota">Kuota Honorarium</th>
                     <th scope="col" class="sort">Action</th>
@@ -222,6 +223,13 @@
                       <div class="media align-items-center">
                         <div class="media-body">
                           <span class="name mb-0 text-sm">{{ $t->deskripsi }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->keterangan }}</span>
                         </div>
                       </div>
                     </th>

@@ -84,11 +84,15 @@
                             <input id="deskripsi" type="text" class="form-control" name="deskripsi" placeholder="Deskripsi" required>
                         </div>
                         <div class="form-group">
+                            <label for="keterangan">Keterangan</label>
+                            <input id="keterangan" type="text" class="form-control" name="keterangan" placeholder="Keterangan" required>
+                        </div>
+                        <div class="form-group">
                             <label for="jumlah">Jumlah</label>
                             <input id="jumlah" type="text" class="form-control" name="jumlah" placeholder="Jumlah" required>
                         </div>
                         <div class="form-group">
-                            <label for="tanggal_penerimaan">Tanggal Penerimaan</label>
+                            <label for="tanggal_penerimaan">Tanggal SP2D</label>
                             <input id="tanggal_penerimaan" type="date" class="form-control" name="tanggal_penerimaan" required>
                         </div>
 

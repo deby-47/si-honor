@@ -66,6 +66,7 @@ class TrxController extends Controller
         $trx->no_sk = $request->no_sk;
         $trx->no_spm = $request->no_spm;
         $trx->deskripsi = $request->deskripsi;
+        $trx->keterangan = $request->keterangan;
         $trx->jumlah = $request->jumlah;
         $trx->tanggal_penerimaan = $request->input('tanggal_penerimaan');
         $trx->kuota = $empty->isEmpty() ? $max - 1 : ($check_deskripsi->isEmpty() ? $latest - 1 : $latest);
@@ -164,7 +165,7 @@ class TrxController extends Controller
             ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
             ->where('pegawai.status', '=', 1)
             ->whereIn('id_pegawai', collect($pg))
-            ->orderBy('transaksi.deskripsi', 'ASC')
+            ->orderBy('transaksi.kuota', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->paginate();
 
