@@ -132,11 +132,6 @@ class TrxController extends Controller
         return Excel::download(new TransaksiExport($id), 'riwayat_transaksi.xlsx');
     }
 
-    public function exportIdx($id)
-    {
-        return Excel::download(new TransaksiExport($id), 'riwayat_transaksi.xlsx');
-    }
-
     public function getKuota($id)
     {
         $check_pg = DB::table('transaksi')->where('id_pegawai', '=', $id)->get();

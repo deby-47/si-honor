@@ -250,7 +250,6 @@
                       </div>
                     </th>
                     <td>
-                      <a class="btn btn-xs btn-info fa fa-download" href="/export/{{ $t->id_pegawai }}" target="_blank"></a>
                       <a class="btn btn-xs btn-primary fa fa-pencil" href="/trx/{{ $t->id_trx }}/edit"></a>
                       <form method="POST" action="{{ route('trx_hapus', $t->id_trx) }}">
                         @csrf

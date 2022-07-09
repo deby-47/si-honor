@@ -217,12 +217,13 @@
                       {{ $pgs->max_kuota }}
                     </td>
                     <td>
+                      <a class="btn btn-xs btn-info fa fa-download" href="/export/{{ $pgs->id }}" target="_blank"></a>
                       <a class="btn btn-xs btn-primary fa fa-pen" href="/pegawai/{{ $pgs->id }}/edit"></a>
                       <form method="POST" action="{{ route('hapus', $pgs->id) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">
                         <button type="submit" class="btn btn-xs btn-danger show_confirm">
-                          <i data-feather="delete" class="fa fa-trash"></i> 
+                          <i data-feather="delete" class="fa fa-trash"></i>
                         </button>
                       </form>
                     </td>

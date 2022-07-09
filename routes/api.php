@@ -22,9 +22,9 @@ Route::post('/pegawai/hapus/{id}', [PegawaiController::class, 'destroy'])->name(
 Route::get('/pegawai/{id}/edit', [PegawaiController::class, 'edit'])->name('edit_pg'); // show form
 Route::post('/pegawai/{id}/edit', [PegawaiController::class, 'update'])->name('update_pg'); // save to db
 Route::get('/pegawai/search', [PegawaiController::class, 'search'])->name('search_pg');
+Route::get('/export/{id}', [PegawaiController::class, 'export'])->name('export');
 
 Route::get('/export', [TrxController::class, 'export'])->name('export');
-Route::get('/export/{id}', [TrxController::class, 'exportIdx'])->name('export_index');
 Route::get('/trx', [TrxController::class, 'index']);
 Route::get('/trx/save', [TrxController::class, 'index_success']);
 Route::get('/trx/tambah', [TrxController::class, 'create']); // show form

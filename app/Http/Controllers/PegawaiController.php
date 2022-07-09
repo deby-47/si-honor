@@ -8,6 +8,8 @@ use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TransaksiExport;
 
 class PegawaiController extends Controller
 {
@@ -118,5 +120,10 @@ class PegawaiController extends Controller
         return view('layouts.pegawai.index', [
             'pg' => $pgs,
         ]);
+    }
+
+    public function export($id)
+    {
+        return Excel::download(new TransaksiExport($id), 'riwayat_transaksi.xlsx');
     }
 }
