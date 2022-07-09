@@ -255,7 +255,7 @@
                       <form method="POST" action="{{ route('trx_hapus', $t->id_trx) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">
-                        <button type="submit" class="btn btn-xs btn-danger" data-toggle="sweet-alert" data-sweet-alert="confirm">
+                        <button type="submit" class="btn btn-xs btn-danger show_confirm" data-toggle="tooltip">
                           <i data-feather="delete" class="fa fa-trash"></i>
                         </button>
                       </form>
@@ -299,6 +299,27 @@
   <script src="../assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
   <!-- Argon JS -->
   <script src="../assets/js/argon.js?v=1.2.0"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+  <script type="text/javascript">
+    $('.show_confirm').click(function(event) {
+      var form = $(this).closest("form");
+      var name = $(this).data("name");
+      event.preventDefault();
+      swal({
+          title: `Are you sure you want to delete this record?`,
+          text: "If you delete this, it will be gone forever.",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            form.submit();
+          }
+        });
+    });
+  </script>
 </body>
 
 </html>
