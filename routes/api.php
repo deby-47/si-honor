@@ -24,6 +24,7 @@ Route::post('/pegawai/{id}/edit', [PegawaiController::class, 'update'])->name('u
 Route::get('/pegawai/search', [PegawaiController::class, 'search'])->name('search_pg');
 
 Route::get('/export', [TrxController::class, 'export'])->name('export');
+Route::get('/export/{id}', [TrxController::class, 'exportIdx'])->name('export_index');
 Route::get('/trx', [TrxController::class, 'index']);
 Route::get('/trx/save', [TrxController::class, 'index_success']);
 Route::get('/trx/tambah', [TrxController::class, 'create']); // show form

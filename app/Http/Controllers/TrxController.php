@@ -132,6 +132,11 @@ class TrxController extends Controller
         return Excel::download(new TransaksiExport($id), 'riwayat_transaksi.xlsx');
     }
 
+    public function exportIdx($id)
+    {
+        return Excel::download(new TransaksiExport($id), 'riwayat_transaksi.xlsx');
+    }
+
     public function getKuota($id)
     {
         $check_pg = DB::table('transaksi')->where('id_pegawai', '=', $id)->get();
@@ -157,17 +162,15 @@ class TrxController extends Controller
     public function search(Request $request)
     {
         $search = $request->search;
-        $pg = DB::table('pegawai')
-            ->where('nama', 'LIKE', '%' . $search . '%')
-            ->pluck('id');
         $transaksi = DB::table('transaksi')
             ->join('jabatan', 'transaksi.id_jabatan', '=', 'jabatan.id_jbt')
             ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
             ->where('pegawai.status', '=', 1)
-            ->whereIn('id_pegawai', collect($pg))
+            ->where('nama', 'LIKE', '%' . $search . '%')
+            ->orWhere('deskripsi', 'LIKE', '%' . $search . '%')
             ->orderBy('transaksi.kuota', 'ASC')
             ->where('transaksi.status', '=', 1)
-            ->paginate();
+            ->paginate(10);
 
         return view('layouts.transaksi.index', [
             'trx' => $transaksi,

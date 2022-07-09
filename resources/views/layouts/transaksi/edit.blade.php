@@ -1,6 +1,12 @@
 @extends('layouts.pegawai.app')
 <title>Ubah Transaksi</title>
-
+<style>
+    .box-form {
+        max-height: 600px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+</style>
 <body>
     <nav class="sidenav navbar navbar-verticaL fixed-left navbar-expand-xs navbar-light" id="sidenav-main">
         <div class="scrollbar-inner">
@@ -41,7 +47,7 @@
             <div class="header-body mt-7 mb-7">
                 <div class="col-xs-6" style="position:fixed; left: 300px; right: 80px;">
                     @foreach ($trx as $t)
-                    <form method="POST">
+                    <form method="POST" class="box-form">
                         <div class="form-group">
                             <label for="pegawai">Pegawai</label>
                             <input value="{{ $t->nama }}" id="pegawai" type="text" class="form-control" name="pegawai" required disabled>
@@ -63,7 +69,7 @@
                             <input value="{{ $t->jumlah }}" id="jumlah" type="text" class="form-control" name="jumlah" required disabled>
                         </div>
                         <div class="form-group">
-                            <label for="tanggal_penerimaan">Tanggal Penerimaan</label>
+                            <label for="tanggal_penerimaan">Tanggal</label>
                             <input value="{{ $t->tanggal_penerimaan }}" id="tanggal_penerimaan" type="date" class="form-control" name="tanggal_penerimaan" required>
                         </div>
 

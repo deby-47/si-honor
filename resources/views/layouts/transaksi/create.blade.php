@@ -62,22 +62,13 @@
                             <label for="kuota">Sisa Kuota Penerimaan Honorarium</label>
                             <input id="kuota" type="text" class="form-control" name="kuota" disabled>
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="jabatan">Jabatan</label><br />
-                            <select class="custom-select" name="jabatan" required>
-                                <option selected>Pilih Jabatan</option>
-                                @foreach (App\Models\Jabatan::selectJbt() as $j)
-                                <option value="{{ $j->id_jbt }}">{{ $j->kode }}</option>
-                                @endforeach
-                            </select>
-                        </div> -->
                         <div class="form-group">
                             <label for="no_sk">No SK</label>
                             <input id="no_sk" type="text" class="form-control" name="no_sk" placeholder="No SK" required>
                         </div>
                         <div class="form-group">
                             <label for="no_spm">No SPM</label>
-                            <input id="no_spm" type="text" class="form-control" name="no_spm" placeholder="No SPM" required>
+                            <input id="no_spm" type="text" class="form-control" name="no_spm" placeholder="No SPM">
                         </div>
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi Kegiatan</label>
@@ -85,7 +76,7 @@
                         </div>
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
-                            <input id="keterangan" type="text" class="form-control" name="keterangan" placeholder="Keterangan" required>
+                            <input id="keterangan" type="text" class="form-control" name="keterangan" placeholder="Keterangan">
                         </div>
                         <div class="form-group">
                             <label for="jumlah">Jumlah</label>
@@ -108,7 +99,6 @@
         $(document).ready(function() {
             $('#id_pegawai').on('change', function() {
                 var pegawaiID = $(this).val();
-                console.log('view', pegawaiID);
                 if (pegawaiID) {
                     $.ajax({
                         url: '/trx/kuota/' + pegawaiID,
@@ -118,7 +108,6 @@
                             "id": pegawaiID
                         },
                         success: function(response) {
-                            console.log('success', response)
                             document.getElementById('kuota').value = response;
                         }
                     });

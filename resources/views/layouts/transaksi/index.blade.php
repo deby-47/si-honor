@@ -14,6 +14,7 @@
   <!-- Icons -->
   <link rel="stylesheet" href="../assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../assets/css/argon.css?v=1.2.0" type="text/css">
 </head>
@@ -249,12 +250,13 @@
                       </div>
                     </th>
                     <td>
-                      <a class="btn btn-xs btn-primary" href="/trx/{{ $t->id_trx }}/edit">Ubah</a>
+                      <a class="btn btn-xs btn-info fa fa-download" href="/export/{{ $t->id_pegawai }}" target="_blank"></a>
+                      <a class="btn btn-xs btn-primary fa fa-pencil" href="/trx/{{ $t->id_trx }}/edit"></a>
                       <form method="POST" action="{{ route('trx_hapus', $t->id_trx) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">
                         <button type="submit" class="btn btn-xs btn-danger" data-toggle="sweet-alert" data-sweet-alert="confirm">
-                          <i data-feather="delete"></i> Hapus
+                          <i data-feather="delete" class="fa fa-trash"></i>
                         </button>
                       </form>
                     </td>
@@ -267,7 +269,9 @@
             <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
-                  <h3 class="mb-0">{{ $trx->links() }}</h3>
+                  <h3 class="mb-0">
+                    {{ $trx->withQueryString()->links() }}
+                  </h3>
                 </ul>
               </nav>
             </div>

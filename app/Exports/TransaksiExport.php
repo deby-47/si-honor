@@ -28,14 +28,15 @@ class TransaksiExport implements FromCollection, WithHeadings, ShouldAutoSize, W
         "Instansi",
         "Nomor SPM", 
         "Deskripsi", 
+        "Keterangan",
         "Jumlah", 
-        "Tanggal Penerimaan",
+        "Tanggal",
         "Kuota Tersisa"];
     }
 
     public function collection()
     {
-        $res = DB::select(DB::raw("select pg.nip, pg.nama, jb.kode, pg.instansi, trx.no_spm, trx.deskripsi, 
+        $res = DB::select(DB::raw("select pg.nip, pg.nama, jb.kode, pg.instansi, trx.no_spm, trx.deskripsi, trx.keterangan,
                trx.jumlah, trx.tanggal_penerimaan, trx.kuota
                from transaksi trx 
                join jabatan jb on trx.id_jabatan = jb.id_jbt
