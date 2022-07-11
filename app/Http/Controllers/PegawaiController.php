@@ -113,6 +113,8 @@ class PegawaiController extends Controller
         $pgs = DB::table('pegawai')
             ->join('jabatan', 'pegawai.jabatan', '=', 'jabatan.id_jbt')
             ->where('nama', 'LIKE', '%' . $search . '%')
+            ->orWhere('jabatan.kode', 'LIKE', '%' . $search . '%')
+            ->orWhere('pegawai.instansi', 'LIKE', '%' . $search . '%')
             ->where('pegawai.status', '=', 1)
             ->orderBy('pegawai.nama', 'ASC')
             ->paginate(10);

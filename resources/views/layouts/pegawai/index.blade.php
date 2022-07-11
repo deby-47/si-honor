@@ -236,7 +236,7 @@
             <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
-                  <h3 class="mb-0">{{ $pg->links() }}</h3>
+                  <h3 class="mb-0">{{ $pg->withQueryString()->links() }}</h3>
                 </ul>
               </nav>
             </div>

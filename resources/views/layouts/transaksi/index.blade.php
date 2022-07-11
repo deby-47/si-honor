@@ -146,19 +146,19 @@
               <table class="table align-items-center table-flush" counter-increment: 1>
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="no">No</th>
-                    <th scope="col" class="sort" data-sort="pegawai">NIP</th>
-                    <th scope="col" class="sort" data-sort="pegawai">Pegawai</th>
-                    <th scope="col" class="sort" data-sort="pegawai">Instansi</th>
-                    <th scope="col" class="sort" data-sort="jabatan">Jabatan</th>
-                    <th scope="col" class="sort" data-sort="tanggal">Tanggal SP2D</th>
-                    <th scope="col" class="sort" data-sort="sk">No SK</th>
-                    <th scope="col" class="sort" data-sort="spm">No SPM</th>
-                    <th scope="col" class="sort" data-sort="deskripsi">Deskripsi Kegiatan</th>
-                    <th scope="col" class="sort" data-sort="deskripsi">Keterangan</th>
-                    <th scope="col" class="sort" data-sort="jumlah">Jumlah</th>
-                    <th scope="col" class="sort" data-sort="kuota">Kuota Honorarium</th>
-                    <th scope="col" class="sort">Action</th>
+                    <th scope="col" class="sort" data-sort="no" style="text-align:center">No</th>
+                    <th scope="col" class="sort" data-sort="pegawai" style="text-align:center">NIP</th>
+                    <th scope="col" class="sort" data-sort="pegawai" style="text-align:center">Pegawai</th>
+                    <th scope="col" class="sort" data-sort="pegawai" style="text-align:center">Instansi</th>
+                    <th scope="col" class="sort" data-sort="jabatan" style="text-align:center">Jabatan</th>
+                    <th scope="col" class="sort" data-sort="tanggal" style="text-align:center">Tanggal SP2D</th>
+                    <th scope="col" class="sort" data-sort="sk" style="text-align:center">No SK</th>
+                    <th scope="col" class="sort" data-sort="spm" style="text-align:center">No SPM</th>
+                    <th scope="col" class="sort" data-sort="deskripsi" style="text-align:center">Deskripsi Kegiatan</th>
+                    <th scope="col" class="sort" data-sort="deskripsi" style="text-align:center">Keterangan</th>
+                    <th scope="col" class="sort" data-sort="jumlah" style="text-align:center">Jumlah</th>
+                    <th scope="col" class="sort" data-sort="kuota" style="text-align:center">Kuota Honorarium</th>
+                    <th scope="col" class="sort" style="text-align:center">Action</th>
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -192,7 +192,7 @@
                         </div>
                       </div>
                     </th>
-                    <th scope="row">
+                    <th scope="row" style="text-align:center">
                       <div class="media align-items-center">
                         <div class="media-body">
                           <span class="name mb-0 text-sm">{{ $t->kode }}</span>
@@ -242,7 +242,7 @@
                         </div>
                       </div>
                     </th>
-                    <th scope="row">
+                    <th scope="row" style="text-align:center">
                       <div class="media align-items-center">
                         <div class="media-body">
                           <span class="name mb-0 text-sm">{{ $t->kuota }}</span>
