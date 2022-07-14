@@ -163,7 +163,7 @@ class TrxController extends Controller
             ->where('pegawai.status', '=', 1)
             ->where('nama', 'LIKE', '%' . $search . '%')
             ->orWhere('deskripsi', 'LIKE', '%' . $search . '%')
-            ->orderBy('transaksi.kuota', 'ASC')
+            ->orderBy('transaksi.id_trx', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->paginate(10);
 

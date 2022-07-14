@@ -1,3 +1,13 @@
+<style>
+    .container {
+        width: 105px;
+        height: 140px;
+        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Coat_of_arms_of_North_Kalimantan_%282021_version%29.svg/1200px-Coat_of_arms_of_North_Kalimantan_%282021_version%29.svg.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+</style>
+
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
         <!-- Toggler -->
@@ -5,16 +15,14 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
-        </a>
+        <div class="container"></div>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
+                            <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
                         </span>
                     </div>
                 </a>
@@ -25,12 +33,12 @@
                     <a href="#" class="dropdown-item">
                         <i class="ni ni-settings-gear-65"></i>
                         <span>{{ __('Settings') }}</span>
-                    <div class="dropdown-divider"></div>
-                    <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
+                        <div class="dropdown-divider"></div>
+                        <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                        <i class="ni ni-user-run"></i>
-                        <span>{{ __('Logout') }}</span>
-                    </a>
+                            <i class="ni ni-user-run"></i>
+                            <span>{{ __('Logout') }}</span>
+                        </a>
                 </div>
             </li>
         </ul>
@@ -72,14 +80,14 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/pegawai">
-                      <i class="ni ni-bullet-list-67 text-default"></i>
-                      <span class="nav-link-text">Daftar Pegawai</span>
+                        <i class="ni ni-bullet-list-67 text-default"></i>
+                        <span class="nav-link-text">Daftar Pegawai</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/trx">
-                      <i class="ni ni-bullet-list-67 text-default"></i>
-                      <span class="nav-link-text">Daftar Honorarium</span>
+                        <i class="ni ni-bullet-list-67 text-default"></i>
+                        <span class="nav-link-text">Daftar Honorarium</span>
                     </a>
                 </li>
             </ul>
