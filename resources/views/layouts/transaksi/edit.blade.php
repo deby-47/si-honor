@@ -69,7 +69,7 @@
                             <input value="{{ $t->jumlah }}" id="jumlah" type="text" class="form-control" name="jumlah" required disabled>
                         </div>
                         <div class="form-group">
-                            <label for="tanggal_penerimaan">Tanggal</label>
+                            <label for="tanggal_penerimaan">Tanggal SPM</label>
                             <input value="{{ $t->tanggal_penerimaan }}" id="tanggal_penerimaan" type="date" class="form-control" name="tanggal_penerimaan" required>
                         </div>
 

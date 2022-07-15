@@ -90,7 +90,7 @@
                             <input id="jumlah" type="text" class="form-control" name="jumlah" placeholder="Jumlah" required>
                         </div>
                         <div class="form-group">
-                            <label for="tanggal_penerimaan">Tanggal SP2D</label>
+                            <label for="tanggal_penerimaan">Tanggal SPM</label>
                             <input id="tanggal_penerimaan" type="date" class="form-control" name="tanggal_penerimaan" required>
                         </div>
 

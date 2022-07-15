@@ -7,8 +7,9 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 
-class TransaksiExport implements FromCollection, WithHeadings, ShouldAutoSize, WithStrictNullComparison
+class TransaksiExport extends \PhpOffice\PhpSpreadsheet\Cell\StringValueBinder implements FromCollection, WithHeadings, ShouldAutoSize, WithStrictNullComparison, WithCustomValueBinder
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -30,7 +31,7 @@ class TransaksiExport implements FromCollection, WithHeadings, ShouldAutoSize, W
         "Deskripsi", 
         "Keterangan",
         "Jumlah", 
-        "Tanggal",
+        "Tanggal SPM",
         "Kuota Tersisa"];
     }
 

@@ -160,7 +160,7 @@
                     <th scope="col" class="sort" data-sort="pegawai" style="text-align:center">Pegawai</th>
                     <th scope="col" class="sort" data-sort="pegawai" style="text-align:center">Instansi</th>
                     <th scope="col" class="sort" data-sort="jabatan" style="text-align:center">Jabatan</th>
-                    <th scope="col" class="sort" data-sort="tanggal" style="text-align:center">Tanggal SP2D</th>
+                    <th scope="col" class="sort" data-sort="tanggal" style="text-align:center">Tanggal SPM</th>
                     <th scope="col" class="sort" data-sort="sk" style="text-align:center">No SK</th>
                     <th scope="col" class="sort" data-sort="spm" style="text-align:center">No SPM</th>
                     <th scope="col" class="sort" data-sort="deskripsi" style="text-align:center">Deskripsi Kegiatan</th>
