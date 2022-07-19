@@ -194,7 +194,8 @@
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $t->nip }}</span>
+                        @php $nip = strlen($t->nip) < 5 ? "-" : $t->nip @endphp
+                          <span class="name mb-0 text-sm">{{ $nip }}</span>
                         </div>
                       </div>
                     </th>
@@ -279,7 +280,7 @@
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          @php $jumlah = "Rp" . number_format((15 * $t->jumlah_kotor / 100), 2, ',','.'); @endphp
+                          @php $jumlah = "Rp" . number_format(($t->jumlah_kotor - $t->jumlah), 2, ',','.'); @endphp
                           <span class="name mb-0 text-sm">{{ $jumlah }}</span>
                         </div>
                       </div>
@@ -295,7 +296,8 @@
                     <th scope="row" style="text-align:center">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $t->kuota }}</span>
+                          @php $kuota = $t->kuota > 5 ? "-" : $t->kuota @endphp
+                          <span class="name mb-0 text-sm">{{ $kuota }}</span>
                         </div>
                       </div>
                     </th>

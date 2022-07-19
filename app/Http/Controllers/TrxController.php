@@ -21,10 +21,10 @@ class TrxController extends Controller
             ->join('jabatan_tim', 'transaksi.id_tim', '=', 'jabatan_tim.id_tim')
             ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
             ->where('pegawai.status', '=', 1)
-            ->orderBy('transaksi.id_trx', 'ASC')
+            ->orderBy('transaksi.id_tim', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->paginate(10);
-        
+
         return view('layouts.transaksi.index', [
             'trx' => $trx,
         ]); //return with view
@@ -37,11 +37,6 @@ class TrxController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'bulan' => 'numeric',
-            'deskripsi' => 'required'
-        ]);
-        
         $jabatan = DB::table('pegawai')
             ->where('id', '=', $request->input('id_pegawai'))
             ->value('jabatan');
@@ -63,6 +58,11 @@ class TrxController extends Controller
             ->where('deskripsi', '=', $request->input('deskripsi'))
             ->where('status', '=', 1)
             ->get();
+        $golongan = DB::table('pegawai')
+            ->select('golongan')
+            ->where('id', '=', $request->input('id_pegawai'))
+            ->get();
+        $pph = str_contains($golongan, 4) ? 15 : (str_contains($golongan, "Non") ? 15 : (str_contains($golongan, 3) ? 5 : 1));
 
         $trx = new Transaksi;
         $trx->id_pegawai = $request->input('id_pegawai');
@@ -76,7 +76,7 @@ class TrxController extends Controller
         $trx->deskripsi = $request->deskripsi;
         $trx->keterangan = $request->keterangan;
         $trx->jumlah_kotor = $request->jumlah_kotor;
-        $trx->jumlah = $request->jumlah_kotor - (15 * $request->jumlah_kotor / 100);
+        $trx->jumlah = $request->jumlah_kotor - ($pph * $request->jumlah_kotor / 100);
         $trx->tanggal_penerimaan = $request->input('tanggal_penerimaan');
         $trx->kuota = $empty->isEmpty() ? $max - 1 : ($check_deskripsi->isEmpty() ? $latest - 1 : $latest);
 
@@ -144,10 +144,10 @@ class TrxController extends Controller
             ->where('pegawai.status', '=', 1)
             ->where('deskripsi', 'LIKE', '%' . $search . '%')
             ->orWhere('keterangan', 'LIKE', '%' . $search . '%')
-            ->orderBy('transaksi.id_trx', 'ASC')
+            ->orderBy('transaksi.id_tim', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->get()->toArray();
-        
+
         return PDF::loadView('layouts.transaksi.pdf', [
             'trx' => $trx,
         ])->setPaper('a4', 'landscape')->stream();
@@ -156,21 +156,26 @@ class TrxController extends Controller
     public function getKuota($id)
     {
         $check_pg = DB::table('transaksi')->where('id_pegawai', '=', $id)->get();
-        if (!$check_pg->isEmpty()) 
+        if ($id == 4374 or $id == 4375)
         {
-            $latest = DB::table('transaksi')
-                ->where('id_pegawai', '=', $id)
-                ->orderBy('created_at', 'DESC')->limit(1)
-                ->where('status', '=', 1)
-                ->value('kuota');
+            $latest = "";
         } else {
-            $jabatan = DB::table('pegawai')
-                ->where('id', '=', $id)
-                ->value('jabatan');
-            $latest = DB::table('jabatan')
-                ->where('id_jbt', '=', $jabatan)
-                ->value('max_kuota');
+            if (!$check_pg->isEmpty()) {
+                $latest = DB::table('transaksi')
+                    ->where('id_pegawai', '=', $id)
+                    ->orderBy('created_at', 'DESC')->limit(1)
+                    ->where('status', '=', 1)
+                    ->value('kuota');
+            } else {
+                $jabatan = DB::table('pegawai')
+                    ->where('id', '=', $id)
+                    ->value('jabatan');
+                $latest = DB::table('jabatan')
+                    ->where('id_jbt', '=', $jabatan)
+                    ->value('max_kuota');
+            }
         }
+        
 
         return response()->json($latest);
     }
@@ -189,7 +194,7 @@ class TrxController extends Controller
             ->where('nama', 'LIKE', '%' . $search . '%')
             ->orWhere('deskripsi', 'LIKE', '%' . $search . '%')
             ->orWhere('keterangan', 'LIKE', '%' . $search . '%')
-            ->orderBy('transaksi.id_trx', 'ASC')
+            ->orderBy('transaksi.id_tim', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->paginate(10);
 
@@ -211,7 +216,7 @@ class TrxController extends Controller
         Session::save();
         Session::put('bendahara', $request->get('bendahara'));
         Session::save();
-        
+
         return Redirect::to('/export_pdf');
     }
 }

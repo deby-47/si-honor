@@ -11,7 +11,7 @@ class Pegawai extends Model
     use HasFactory;
 
     public $table = "pegawai";
-    protected $fillable = ['nip', 'nama', 'instansi', 'jabatan'];
+    protected $fillable = ['nip', 'nama', 'instansi', 'jabatan', 'golongan'];
 
     public function selectPegawai()
     {

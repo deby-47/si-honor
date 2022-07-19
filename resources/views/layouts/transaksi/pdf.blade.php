@@ -16,6 +16,15 @@
         border: 1px solid black;
         border-collapse: collapse;
     }
+
+    .page-break-table {
+        page-break-before: always;
+    }
+
+    .page-break-tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
 </style>
 
 <body>
@@ -29,29 +38,32 @@
                 <div class="card">
                     <!-- Card header -->
                     <div class="card-header border-0">
-                        <h3 class="mb-0" style="text-align:center;vertical-align:middle">Daftar Penerima <br> {{ reset($trx)->deskripsi }}</h3>
+                        <h3 class="mb-0" style="text-align:center;vertical-align:middle">
+                            Daftar Penerima <br> {{ reset($trx)->deskripsi }} {{ reset($trx)->keterangan }}
+                            <br> Berdasarkan SK Nomor {{ reset($trx)->no_sk }}
+                        </h3>
                     </div>
                     <!-- Light table -->
                     <div class="table-responsive">
                         <table class="table align-items-center table-flush border" counter-increment: 1>
                             <thead class="thead-light border">
                                 <tr class="border">
-                                    <th scope="col" class="sort" data-sort="no" style="text-align:center;font-size:12px;">No</th>
-                                    <th scope="col" class="sort" data-sort="nip" style="text-align:center;font-size:12px;">NIP</th>
-                                    <th scope="col" class="sort" data-sort="pegawai" style="text-align:center;font-size:12px;">Pegawai</th>
-                                    <th scope="col" class="sort" data-sort="instansi" style="text-align:center;font-size:12px;">Instansi</th>
-                                    <th scope="col" class="sort" data-sort="jabatan" style="text-align:center;font-size:12px;">Jabatan dalam Tim</th>
-                                    <th scope="col" class="sort" data-sort="sk" style="text-align:center;font-size:12px;">No SK</th>
-                                    <th scope="col" class="sort" data-sort="deskripsi" style="text-align:center;font-size:12px;">Deskripsi Kegiatan</th>
-                                    <th scope="col" class="sort" data-sort="keterangan" style="text-align:center;font-size:12px;">Keterangan</th>
-                                    <th scope="col" class="sort" data-sort="bulan" style="text-align:center;font-size:12px;">Jumlah Bulan</th>
-                                    <th scope="col" class="sort" data-sort="jumlah" style="text-align:center;font-size:12px;">Jumlah</th>
-                                    <th scope="col" class="sort" data-sort="pph" style="text-align:center;font-size:12px;">PPh</th>
-                                    <th scope="col" class="sort" data-sort="diterima" style="text-align:center;font-size:12px;">Diterima</th>
-                                    <th scope="col" class="sort" data-sort="kuota" style="text-align:center;font-size:12px;">Kuota Honorarium</th>
+                                    <th scope="col" class="sort border" data-sort="no" style="text-align:center;font-size:12px;">No</th>
+                                    <th scope="col" class="sort border" data-sort="nip" style="text-align:center;font-size:12px;">NIP</th>
+                                    <th scope="col" class="sort border" data-sort="pegawai" style="text-align:center;font-size:12px;">Pegawai</th>
+                                    <th scope="col" class="sort border" data-sort="instansi" style="text-align:center;font-size:12px;">Instansi</th>
+                                    <th scope="col" class="sort border" data-sort="jabatan" style="text-align:center;font-size:12px;">Jabatan dalam Tim</th>
+                                    <th scope="col" class="sort border" data-sort="bulan" style="text-align:center;font-size:12px;">Jumlah Bulan</th>
+                                    <th scope="col" class="sort border" data-sort="jumlah" style="text-align:center;font-size:12px;">Jumlah</th>
+                                    <th scope="col" class="sort border" data-sort="pph" style="text-align:center;font-size:12px;">PPh</th>
+                                    <th scope="col" class="sort border" data-sort="diterima" style="text-align:center;font-size:12px;">Diterima</th>
+                                    <th scope="col" class="sort border" data-sort="kuota" style="text-align:center;font-size:12px;">Kuota Honorarium</th>
                                 </tr>
                             </thead>
                             <tbody class="list border">
+                                @php $gross = 0 @endphp
+                                @php $tax = 0 @endphp
+                                @php $net = 0 @endphp
                                 @foreach ($trx as $key => $t)
                                 <tr class="border">
                                     <th scope="row" class="border">
@@ -64,7 +76,8 @@
                                     <th scope="row" class="border">
                                         <div class="media align-items-center">
                                             <div class="media-body">
-                                                <span class="name mb-0 text-sm" style="font-size:12px;">{{ $t->nip }}</span>
+                                                @php $nip = strlen($t->nip) < 5 ? "-" : $t->nip @endphp
+                                                    <span class="name mb-0 text-sm" style="font-size:12px;">{{ $nip }}</span>
                                             </div>
                                         </div>
                                     </th>
@@ -89,27 +102,6 @@
                                             </div>
                                         </div>
                                     </th>
-                                    <th scope="row" class="border">
-                                        <div class="media align-items-center">
-                                            <div class="media-body">
-                                                <span class="name mb-0 text-sm" style="font-size:12px;">{{ $t->no_sk }}</span>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th scope="row" class="border">
-                                        <div class="media align-items-center">
-                                            <div class="media-body">
-                                                <span class="name mb-0 text-sm" style="font-size:12px;">{{ $t->deskripsi }}</span>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th scope="row" class="border">
-                                        <div class="media align-items-center">
-                                            <div class="media-body">
-                                                <span class="name mb-0 text-sm" style="font-size:12px;">{{ $t->keterangan }}</span>
-                                            </div>
-                                        </div>
-                                    </th>
                                     <th scope="row" style="text-align:center" class="border">
                                         <div class="media align-items-center">
                                             <div class="media-body">
@@ -120,7 +112,9 @@
                                     <th scope="row" style="text-align:center" class="border">
                                         <div class="media align-items-center">
                                             <div class="media-body">
-                                                <span class="name mb-0 text-sm" style="font-size:12px;">{{ $t->jumlah_kotor }}</span>
+                                                @php $jumlah = "Rp" . number_format($t->jumlah_kotor, 2, ',','.'); @endphp
+                                                @php $gross += $t->jumlah_kotor @endphp
+                                                <span class="name mb-0 text-sm" style="font-size:12px;">{{ $jumlah }}</span>
                                             </div>
                                         </div>
                                     </th>
@@ -128,6 +122,7 @@
                                         <div class="media align-items-center">
                                             <div class="media-body">
                                                 @php $jumlah = "Rp" . number_format((15 * $t->jumlah_kotor / 100), 2, ',','.'); @endphp
+                                                @php $tax += (15 * $t->jumlah_kotor / 100) @endphp
                                                 <span class="name mb-0 text-sm" style="font-size:12px;">{{ $jumlah }}</span>
                                             </div>
                                         </div>
@@ -135,6 +130,7 @@
                                     <th scope="row" class="border">
                                         <div class="media align-items-center">
                                             <div class="media-body">
+                                                @php $net += $t->jumlah @endphp
                                                 @php $jumlah = "Rp" . number_format($t->jumlah, 2, ',','.'); @endphp
                                                 <span class="name mb-0 text-sm" style="font-size:12px;">{{ $jumlah }}</span>
                                             </div>
@@ -143,25 +139,35 @@
                                     <th scope="row" style="text-align:center" class="border">
                                         <div class="media align-items-center">
                                             <div class="media-body">
-                                                <span class="name mb-0 text-sm" style="font-size:12px;">{{ $t->kuota }}</span>
+                                                @php $kuota = $t->kuota > 5 ? "-" : $t->kuota @endphp
+                                                <span class="name mb-0 text-sm" style="font-size:12px;">{{ $kuota }}</span>
                                             </div>
                                         </div>
                                     </th>
                                 </tr>
                                 @endforeach
+                                <tr>
+                                    <th scope="row" style="text-align:center" class="border">
+                                    <td colspan="5"><strong>Total</strong></td>
+                                    <td class="border" style="font-size:14px;"><strong>{{ "Rp" . number_format($gross, 2, ',','.') }}</strong></td>
+                                    <td class="border" style="font-size:14px;"><strong>{{ "Rp" . number_format($tax, 2, ',','.') }}</strong></td>
+                                    <td class="border" style="font-size:14px;"><strong>{{ "Rp" . number_format($net, 2, ',','.') }}</strong></td>
+                                    <td></td>
+                                    </th>
+                                </tr>
                             </tbody>
                         </table>
-                        <table class="table align-items-center table-flush" align="right">
+                        <table class="table align-items-center table-flush page-break-table" align="right">
                             <thead class="thead-light">
-                                <tr>
+                                <tr class="page-break-tr">
                                     <th scope="col" class="sort" data-sort="pa" style="padding: 45px;">
-                                        Pengguna Anggaran
+                                        <br>Pengguna Anggaran,
                                     </th>
                                     <th scope="col" class="sort" data-sort="pptk" style="padding: 45px;">
-                                        Pejabat Pelaksana Teknis Kegiatan
+                                        <br>Pejabat Pelaksana Teknis Kegiatan,
                                     </th>
                                     <th scope="col" class="sort" data-sort="bendahara" style="padding: 45px;">
-                                        Bendahara Pengeluaran
+                                        <br>Bendahara Pengeluaran,
                                     </th>
                                 </tr>
                             </thead>
