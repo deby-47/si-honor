@@ -28,6 +28,12 @@
     background-size: cover;
     background-repeat: no-repeat;
   }
+
+  .topcorner {
+    position: absolute;
+    top: 70px;
+    right: 5px;
+  }
 </style>
 
 <body>
@@ -116,9 +122,7 @@
             <div class="col-lg-6 col-7">
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Tables</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Tables</li>
+                  <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fas fa-home"></i></a></li>
                 </ol>
               </nav>
             </div>
@@ -152,21 +156,28 @@
                   </div>
                 </div>
               </form>
+              <div class="topcorner">
+                <a class="btn btn-info fa fa-file-pdf" target="_blank" href="/signee"></a>
+              </div>
               <table class="table align-items-center table-flush" counter-increment: 1>
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="no" style="text-align:center">No</th>
-                    <th scope="col" class="sort" data-sort="pegawai" style="text-align:center">NIP</th>
-                    <th scope="col" class="sort" data-sort="pegawai" style="text-align:center">Pegawai</th>
-                    <th scope="col" class="sort" data-sort="pegawai" style="text-align:center">Instansi</th>
-                    <th scope="col" class="sort" data-sort="jabatan" style="text-align:center">Jabatan</th>
-                    <th scope="col" class="sort" data-sort="tanggal" style="text-align:center">Tanggal SPM</th>
-                    <th scope="col" class="sort" data-sort="sk" style="text-align:center">No SK</th>
-                    <th scope="col" class="sort" data-sort="spm" style="text-align:center">No SPM</th>
-                    <th scope="col" class="sort" data-sort="deskripsi" style="text-align:center">Deskripsi Kegiatan</th>
-                    <th scope="col" class="sort" data-sort="deskripsi" style="text-align:center">Keterangan</th>
-                    <th scope="col" class="sort" data-sort="jumlah" style="text-align:center">Jumlah</th>
-                    <th scope="col" class="sort" data-sort="kuota" style="text-align:center">Kuota Honorarium</th>
+                    <th scope="col" class="sort" data-sort="no" style="text-align:center;font-size:12px;">No</th>
+                    <th scope="col" class="sort" data-sort="nip" style="text-align:center;font-size:12px;">NIP</th>
+                    <th scope="col" class="sort" data-sort="pegawai" style="text-align:center;font-size:12px;">Pegawai</th>
+                    <th scope="col" class="sort" data-sort="instansi" style="text-align:center;font-size:12px;">Instansi</th>
+                    <th scope="col" class="sort" data-sort="jabatan" style="text-align:center;font-size:12px;">Jabatan</th>
+                    <th scope="col" class="sort" data-sort="tim" style="text-align:center;font-size:12px;">Jabatan dalam Tim</th>
+                    <th scope="col" class="sort" data-sort="tanggal" style="text-align:center;font-size:12px;">Tanggal SPM</th>
+                    <th scope="col" class="sort" data-sort="sk" style="text-align:center;font-size:12px;">No SK</th>
+                    <th scope="col" class="sort" data-sort="spm" style="text-align:center;font-size:12px;">No SPM</th>
+                    <th scope="col" class="sort" data-sort="deskripsi" style="text-align:center;font-size:12px;">Deskripsi Kegiatan</th>
+                    <th scope="col" class="sort" data-sort="keterangan" style="text-align:center;font-size:12px;">Keterangan</th>
+                    <th scope="col" class="sort" data-sort="bulan" style="text-align:center;font-size:12px;">Jumlah Bulan</th>
+                    <th scope="col" class="sort" data-sort="jumlah" style="text-align:center;font-size:12px;">Jumlah</th>
+                    <th scope="col" class="sort" data-sort="pph" style="text-align:center;font-size:12px;">PPh</th>
+                    <th scope="col" class="sort" data-sort="diterima" style="text-align:center;font-size:12px;">Diterima</th>
+                    <th scope="col" class="sort" data-sort="kuota" style="text-align:center;font-size:12px;">Kuota Honorarium</th>
                     <th scope="col" class="sort" style="text-align:center">Action</th>
                   </tr>
                 </thead>
@@ -211,6 +222,13 @@
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->jbt_tim }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
                           <span class="name mb-0 text-sm">{{ Carbon\Carbon::parse($t->tanggal_penerimaan)->translatedFormat('d F Y') }}</span>
                         </div>
                       </div>
@@ -246,6 +264,29 @@
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
+                          <span class="name mb-0 text-sm">{{ $t->bulan }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          @php $jumlah = "Rp" . number_format($t->jumlah_kotor, 2, ',','.'); @endphp
+                          <span class="name mb-0 text-sm">{{ $jumlah }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          @php $jumlah = "Rp" . number_format((15 * $t->jumlah_kotor / 100), 2, ',','.'); @endphp
+                          <span class="name mb-0 text-sm">{{ $jumlah }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
                           @php $jumlah = "Rp" . number_format($t->jumlah, 2, ',','.'); @endphp
                           <span class="name mb-0 text-sm">{{ $jumlah }}</span>
                         </div>
@@ -260,13 +301,13 @@
                     </th>
                     <td>
                       <a class="btn btn-xs btn-primary fa fa-pencil" href="/trx/{{ $t->id_trx }}/edit"></a>
-                      <form method="POST" action="{{ route('trx_hapus', $t->id_trx) }}">
+                      <!-- <form method="POST" action="{{ route('trx_hapus', $t->id_trx) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">
                         <button type="submit" class="btn btn-xs btn-danger show_confirm" data-toggle="tooltip">
                           <i data-feather="delete" class="fa fa-trash"></i>
                         </button>
-                      </form>
+                      </form> -->
                     </td>
                   </tr>
                   @endforeach

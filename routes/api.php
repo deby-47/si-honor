@@ -24,7 +24,10 @@ Route::post('/pegawai/{id}/edit', [PegawaiController::class, 'update'])->name('u
 Route::get('/pegawai/search', [PegawaiController::class, 'search'])->name('search_pg');
 Route::get('/export/{id}', [PegawaiController::class, 'export'])->name('export');
 
+Route::get('/export_pdf', [TrxController::class, 'exportPdf'])->name('export_pdf');
 Route::get('/export', [TrxController::class, 'export'])->name('export');
+Route::get('/signee', [TrxController::class, 'signee'])->name('signee');
+Route::post('/signee', [TrxController::class, 'toPdf']);
 Route::get('/trx', [TrxController::class, 'index']);
 Route::get('/trx/save', [TrxController::class, 'index_success']);
 Route::get('/trx/tambah', [TrxController::class, 'create']); // show form

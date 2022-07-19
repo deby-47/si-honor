@@ -57,6 +57,20 @@
                             <input value="{{ $t->kode }}" id="jabatan" type="text" class="form-control" name="jabatan" required disabled>
                         </div>
                         <div class="form-group">
+                            <label for="instansi">Instansi</label>
+                            <input value="{{ $t->instansi }}" id="instansi" type="text" class="form-control" name="instansi" required disabled>
+                        </div>
+                        <div class="form-group">
+                        <label for="jabatan">Jabatan dalam Tim</label><br/>
+                            @php $jbt = App\Models\JabatanTim::selectJbt()->sortBy('id_tim'); @endphp
+                            <select class="custom-select" name="jabatan" id="jabatan" required>
+                                <option selected disabled>Pilih Jabatan</option>
+                                @foreach ($jbt as $j)
+                                <option value="{{ $j->id_tim }}">{{ $j->jbt_tim }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="no_sk">No SK</label>
                             <input value="{{ $t->no_sk }}" id="no_sk" type="text" class="form-control" name="no_sk" required>
                         </div>
@@ -65,7 +79,19 @@
                             <input value="{{ $t->deskripsi }}" id="deskripsi" type="text" class="form-control" name="deskripsi" required disabled>
                         </div>
                         <div class="form-group">
-                            <label for="jumlah">Jumlah</label>
+                            <label for="keterangan">Keterangan</label>
+                            <input value="{{ $t->keterangan }}" id="keterangan" type="text" class="form-control" name="keterangan" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bulan">Jumlah Bulan Kegiatan</label>
+                            <input value="{{ $t->bulan }}" id="bulan" type="text" class="form-control" name="bulan" placeholder="Jumlah Bulan">
+                        </div>
+                        <div class="form-group">
+                            <label for="bulan">Jumlah Kotor</label>
+                            <input value="{{ $t->jumlah_kotor }}" id="bulan" type="text" class="form-control" name="bulan" placeholder="Jumlah Bulan">
+                        </div>
+                        <div class="form-group">
+                            <label for="jumlah">Jumlah Diterima</label>
                             <input value="{{ $t->jumlah }}" id="jumlah" type="text" class="form-control" name="jumlah" required disabled>
                         </div>
                         <div class="form-group">

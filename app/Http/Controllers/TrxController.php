@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\TransaksiExport;
 use App\Models\Transaksi;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
@@ -17,12 +18,13 @@ class TrxController extends Controller
     {
         $trx = DB::table('transaksi')
             ->join('jabatan', 'transaksi.id_jabatan', '=', 'jabatan.id_jbt')
+            ->join('jabatan_tim', 'transaksi.id_tim', '=', 'jabatan_tim.id_tim')
             ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
             ->where('pegawai.status', '=', 1)
             ->orderBy('transaksi.id_trx', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->paginate(10);
-
+        
         return view('layouts.transaksi.index', [
             'trx' => $trx,
         ]); //return with view
@@ -35,6 +37,11 @@ class TrxController extends Controller
 
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'bulan' => 'numeric',
+            'deskripsi' => 'required'
+        ]);
+        
         $jabatan = DB::table('pegawai')
             ->where('id', '=', $request->input('id_pegawai'))
             ->value('jabatan');
@@ -63,11 +70,13 @@ class TrxController extends Controller
         Session::save();
 
         $trx->id_jabatan = $jabatan;
+        $trx->id_tim = $request->tim;
         $trx->no_sk = $request->no_sk;
         $trx->no_spm = $request->no_spm;
         $trx->deskripsi = $request->deskripsi;
         $trx->keterangan = $request->keterangan;
-        $trx->jumlah = $request->jumlah;
+        $trx->jumlah_kotor = $request->jumlah_kotor;
+        $trx->jumlah = $request->jumlah_kotor - (15 * $request->jumlah_kotor / 100);
         $trx->tanggal_penerimaan = $request->input('tanggal_penerimaan');
         $trx->kuota = $empty->isEmpty() ? $max - 1 : ($check_deskripsi->isEmpty() ? $latest - 1 : $latest);
 
@@ -87,6 +96,7 @@ class TrxController extends Controller
         $id = $request->id;
         $trx = DB::table('transaksi')
             ->join('jabatan', 'transaksi.id_jabatan', '=', 'jabatan.id_jbt')
+            ->join('jabatan_tim', 'transaksi.id_tim', '=', 'jabatan_tim.id_tim')
             ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
             ->where('pegawai.status', '=', 1)
             ->where('transaksi.status', '=', 1)
@@ -100,17 +110,9 @@ class TrxController extends Controller
 
     public function update(Request $request)
     {
-        $rules = [
-            'no_sk' => 'required',
-        ];
-        $msg = [
-            'required' => 'The :attribute field is required.'
-        ];
-
-        $this->validate($request, $rules, $msg);
-
         DB::table('transaksi')->where('id_trx', $request->id)->update([
             'no_sk' => $request->no_sk,
+            'id_tim' => $request->get('jabatan'),
             'tanggal_penerimaan' => $request->tanggal_penerimaan
         ]);
 
@@ -130,6 +132,25 @@ class TrxController extends Controller
     {
         $id = Session::get('id_pgs');
         return Excel::download(new TransaksiExport($id), 'riwayat_transaksi.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $search = Session::get('search');
+        $trx = DB::table('transaksi')
+            ->join('jabatan', 'transaksi.id_jabatan', '=', 'jabatan.id_jbt')
+            ->join('jabatan_tim', 'transaksi.id_tim', '=', 'jabatan_tim.id_tim')
+            ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
+            ->where('pegawai.status', '=', 1)
+            ->where('deskripsi', 'LIKE', '%' . $search . '%')
+            ->orWhere('keterangan', 'LIKE', '%' . $search . '%')
+            ->orderBy('transaksi.id_trx', 'ASC')
+            ->where('transaksi.status', '=', 1)
+            ->get()->toArray();
+        
+        return PDF::loadView('layouts.transaksi.pdf', [
+            'trx' => $trx,
+        ])->setPaper('a4', 'landscape')->stream();
     }
 
     public function getKuota($id)
@@ -157,12 +178,17 @@ class TrxController extends Controller
     public function search(Request $request)
     {
         $search = $request->search;
+        Session::put('search', $search);
+        Session::save();
+
         $transaksi = DB::table('transaksi')
             ->join('jabatan', 'transaksi.id_jabatan', '=', 'jabatan.id_jbt')
+            ->join('jabatan_tim', 'transaksi.id_tim', '=', 'jabatan_tim.id_tim')
             ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
             ->where('pegawai.status', '=', 1)
             ->where('nama', 'LIKE', '%' . $search . '%')
             ->orWhere('deskripsi', 'LIKE', '%' . $search . '%')
+            ->orWhere('keterangan', 'LIKE', '%' . $search . '%')
             ->orderBy('transaksi.id_trx', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->paginate(10);
@@ -170,5 +196,22 @@ class TrxController extends Controller
         return view('layouts.transaksi.index', [
             'trx' => $transaksi,
         ]);
+    }
+
+    public function signee()
+    {
+        return view('layouts.transaksi.signee');
+    }
+
+    public function toPdf(Request $request)
+    {
+        Session::put('pa', $request->get('pa'));
+        Session::save();
+        Session::put('pptk', $request->get('pptk'));
+        Session::save();
+        Session::put('bendahara', $request->get('bendahara'));
+        Session::save();
+        
+        return Redirect::to('/export_pdf');
     }
 }

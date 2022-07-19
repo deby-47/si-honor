@@ -56,7 +56,7 @@
             <div class="header-body mt-7 mb-7">
                 <div class="col-xs-6" style="position:fixed; left: 300px; right: 80px;">
                     <form method="POST" class="box-form">
-                    <label for="id_pegawai">Pegawai</label>
+                        <label for="id_pegawai">Pegawai</label>
                         <div class="form-group">
                             <select class="custom-select" name="id_pegawai" id="id_pegawai" style="width:100%" required>
                                 <option selected>Pilih Pegawai</option>
@@ -68,6 +68,15 @@
                         <div class="form-group">
                             <label for="kuota">Sisa Kuota Penerimaan Honorarium</label>
                             <input id="kuota" type="text" class="form-control" name="kuota" disabled>
+                        </div>
+                        <label for="tim">Jabatan dalam Tim</label>
+                        <div class="form-group">
+                            <select class="custom-select" name="tim" id="tim" style="width:100%" required>
+                                <option selected>Pilih Jabatan</option>
+                                @foreach (App\Models\JabatanTim::selectJbt()->sortBy('id_tim') as $j)
+                                <option value="{{ $j->id_tim }}">{{ $j->jbt_tim }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="no_sk">No SK</label>
@@ -86,8 +95,12 @@
                             <input id="keterangan" type="text" class="form-control" name="keterangan" placeholder="Keterangan">
                         </div>
                         <div class="form-group">
-                            <label for="jumlah">Jumlah</label>
-                            <input id="jumlah" type="text" class="form-control" name="jumlah" placeholder="Jumlah" required>
+                            <label for="bulan">Jumlah Bulan Kegiatan</label>
+                            <input id="bulan" type="text" class="form-control" name="bulan" placeholder="Jumlah Bulan">
+                        </div>
+                        <div class="form-group">
+                            <label for="jumlah_kotor">Jumlah Kotor</label>
+                            <input id="jumlah_kotor" type="text" class="form-control" name="jumlah_kotor" placeholder="Jumlah Kotor" required>
                         </div>
                         <div class="form-group">
                             <label for="tanggal_penerimaan">Tanggal SPM</label>
@@ -102,6 +115,7 @@
     </div>
     <script>
         $('#id_pegawai').select2();
+        $('#tim').select2();
         $('#id_pegawai').on('change', function() {
             var pegawaiID = $(this).val();
             if (pegawaiID) {

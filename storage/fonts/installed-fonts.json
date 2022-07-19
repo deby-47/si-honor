@@ -1,0 +1,11 @@
+{
+    "open sans": {
+        "300": "C:\\xampp\\php\\si-honor\\storage\\fonts\/open_sans_300_2897ef841755d029cd79326b3a4893ba",
+        "normal": "C:\\xampp\\php\\si-honor\\storage\\fonts\/open_sans_normal_43013991c496206686b3f0c129197ee5",
+        "600": "C:\\xampp\\php\\si-honor\\storage\\fonts\/open_sans_600_8713e264d508a0cdfceaa6576eaded06",
+        "bold": "open_sans_bold_96e606aebf881f427389c3b892029fd5"
+    },
+    "fontawesome": {
+        "normal": "fontawesome_normal_7ea195556637d817f455524c7885b526"
+    }
+}
