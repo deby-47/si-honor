@@ -62,7 +62,7 @@ class TrxController extends Controller
             ->select('golongan')
             ->where('id', '=', $request->input('id_pegawai'))
             ->get();
-        $pph = str_contains($golongan, "IV") ? 15 : (str_contains($golongan, "III") ? 5 : 1);
+        $pph = str_contains($golongan, "IV") ? 15 : (str_contains($golongan, "III") ? 5 : 0);
 
         $trx = new Transaksi;
         $trx->id_pegawai = $request->input('id_pegawai');
@@ -76,7 +76,7 @@ class TrxController extends Controller
         $trx->deskripsi = $request->deskripsi;
         $trx->keterangan = $request->keterangan;
         $trx->jumlah_kotor = $request->jumlah_kotor;
-        $trx->jumlah = $request->jumlah_kotor - ($pph * $request->jumlah_kotor / 100);
+        $trx->jumlah = $request->jumlah_kotor - ($request->jumlah_kotor * $pph / 100);
         $trx->tanggal_penerimaan = $request->input('tanggal_penerimaan');
 
         if ($request->jumlah_kotor > 0)
