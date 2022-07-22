@@ -165,8 +165,7 @@
                     <th scope="col" class="sort" data-sort="no" style="text-align:center;font-size:12px;">No</th>
                     <th scope="col" class="sort" data-sort="nip" style="text-align:center;font-size:12px;">NIP</th>
                     <th scope="col" class="sort" data-sort="pegawai" style="text-align:center;font-size:12px;">Pegawai</th>
-                    <th scope="col" class="sort" data-sort="instansi" style="text-align:center;font-size:12px;">Instansi</th>
-                    <th scope="col" class="sort" data-sort="jabatan" style="text-align:center;font-size:12px;">Jabatan</th>
+                    <th scope="col" class="sort" data-sort="title" style="text-align:center;font-size:12px;">Jabatan</th>
                     <th scope="col" class="sort" data-sort="tim" style="text-align:center;font-size:12px;">Jabatan dalam Tim</th>
                     <th scope="col" class="sort" data-sort="tanggal" style="text-align:center;font-size:12px;">Tanggal SPM</th>
                     <th scope="col" class="sort" data-sort="sk" style="text-align:center;font-size:12px;">No SK</th>
@@ -206,17 +205,10 @@
                         </div>
                       </div>
                     </th>
-                    <th scope="row">
-                      <div class="media align-items-center">
-                        <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $t->instansi }}</span>
-                        </div>
-                      </div>
-                    </th>
                     <th scope="row" style="text-align:center">
                       <div class="media align-items-center">
                         <div class="media-body">
-                          <span class="name mb-0 text-sm">{{ $t->kode }}</span>
+                          <span class="name mb-0 text-sm">{{ $t->title }}</span>
                         </div>
                       </div>
                     </th>

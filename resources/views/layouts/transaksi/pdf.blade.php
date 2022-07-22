@@ -51,8 +51,8 @@
                                     <th scope="col" class="sort border" data-sort="no" style="text-align:center;font-size:12px;">No</th>
                                     <th scope="col" class="sort border" data-sort="nip" style="text-align:center;font-size:12px;">NIP</th>
                                     <th scope="col" class="sort border" data-sort="pegawai" style="text-align:center;font-size:12px;">Pegawai</th>
-                                    <th scope="col" class="sort border" data-sort="instansi" style="text-align:center;font-size:12px;">Instansi</th>
-                                    <th scope="col" class="sort border" data-sort="jabatan" style="text-align:center;font-size:12px;">Jabatan dalam Tim</th>
+                                    <th scope="col" class="sort border" data-sort="title" style="text-align:center;font-size:12px;">Jabatan</th>
+                                    <th scope="col" class="sort border" data-sort="tim" style="text-align:center;font-size:12px;">Jabatan dalam Tim</th>
                                     <th scope="col" class="sort border" data-sort="bulan" style="text-align:center;font-size:12px;">Jumlah Bulan</th>
                                     <th scope="col" class="sort border" data-sort="jumlah" style="text-align:center;font-size:12px;">Jumlah</th>
                                     <th scope="col" class="sort border" data-sort="pph" style="text-align:center;font-size:12px;">PPh</th>
@@ -91,7 +91,7 @@
                                     <th scope="row" class="border">
                                         <div class="media align-items-center">
                                             <div class="media-body">
-                                                <span class="name mb-0 text-sm" style="font-size:12px;">{{ $t->instansi }}</span>
+                                                <span class="name mb-0 text-sm" style="font-size:12px;">{{ $t->title }}</span>
                                             </div>
                                         </div>
                                     </th>
@@ -121,8 +121,8 @@
                                     <th scope="row" style="text-align:center" class="border">
                                         <div class="media align-items-center">
                                             <div class="media-body">
-                                                @php $jumlah = "Rp" . number_format((15 * $t->jumlah_kotor / 100), 2, ',','.'); @endphp
-                                                @php $tax += (15 * $t->jumlah_kotor / 100) @endphp
+                                                @php $jumlah = "Rp" . number_format(($t->jumlah_kotor - $t->jumlah), 2, ',','.'); @endphp
+                                                @php $tax += $t->jumlah_kotor - $t->jumlah @endphp
                                                 <span class="name mb-0 text-sm" style="font-size:12px;">{{ $jumlah }}</span>
                                             </div>
                                         </div>

@@ -11,12 +11,12 @@ class Pegawai extends Model
     use HasFactory;
 
     public $table = "pegawai";
-    protected $fillable = ['nip', 'nama', 'instansi', 'jabatan', 'golongan'];
+    protected $fillable = ['nip', 'nama', 'instansi', 'jabatan', 'golongan', 'title'];
 
     public function selectPegawai()
     {
         $pg = DB::table('pegawai')
-            ->select('id', 'nip', 'instansi', 'nama')
+            ->select('id', 'nip', 'instansi', 'nama', 'title')
             ->where('status', '=', 1)
             ->get();
 

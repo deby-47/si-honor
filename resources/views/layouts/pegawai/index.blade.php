@@ -187,13 +187,15 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="no">No</th>
-                    <th scope="col" class="sort" data-sort="nip">NIP</th>
-                    <th scope="col" class="sort" data-sort="nama">Nama</th>
-                    <th scope="col" class="sort" data-sort="instansi">Instansi</th>
-                    <th scope="col" class="sort" data-sort="jabatan">Jabatan</th>
-                    <th scope="col" class="sort" data-sort="kuota">Kuota Honorarium</th>
-                    <th scope="col" class="sort">Action</th>
+                    <th scope="col" class="sort" data-sort="no" style="text-align:center">No</th>
+                    <th scope="col" class="sort" data-sort="nip" style="text-align:center">NIP</th>
+                    <th scope="col" class="sort" data-sort="nama" style="text-align:center">Nama</th>
+                    <th scope="col" class="sort" data-sort="golongan" style="text-align:center">Golongan</th>
+                    <th scope="col" class="sort" data-sort="title" style="text-align:center">Jabatan</th>
+                    <th scope="col" class="sort" data-sort="instansi" style="text-align:center">Instansi</th>
+                    <th scope="col" class="sort" data-sort="jabatan" style="text-align:center">Eselon</th>
+                    <th scope="col" class="sort" data-sort="kuota" style="text-align:center">Kuota Honorarium</th>
+                    <th scope="col" class="sort" style="text-align:center">Action</th>
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -208,20 +210,29 @@
                     </th>
                     <td>
                       <div class="d-flex align-items-center">
-                        <span class="completion mr-2">{{ $pgs->nip }}</span>
+                      @php $nip = strlen($pgs->nip) < 5 ? "-" : $pgs->nip @endphp
+                        <span class="completion mr-2" style="text-align:center">{{ $nip }}</span>
                       </div>
                     </td>
-                    <td class="nama">
+                    <td class="nama" style="text-align:center">
                       {{ $pgs->nama }}
                     </td>
-                    <td class="jabatan">
+                    <td class="golongan" style="text-align:center">
+                      {{ $pgs->golongan }}
+                    </td>
+                    <td class="title" style="text-align:center">
+                      {{ $pgs->title }}
+                    </td>
+                    <td class="instansi" style="text-align:center">
                       {{ $pgs->instansi }}
                     </td>
                     <td class="jabatan">
-                      {{ $pgs->kode }}
+                      @php $kode = str_contains($pgs->kode, "Pejabat") || str_contains($pgs->kode, "Gubernur") ? "Non-Eselon" : $pgs->kode @endphp
+                      {{ $kode }}
                     </td>
-                    <td class="jabatan">
-                      {{ $pgs->max_kuota }}
+                    <td class="jabatan" style="text-align:center">
+                    @php $kuota = $pgs->max_kuota > 5 ? "-" : $pgs->max_kuota @endphp
+                      {{ $kuota }}
                     </td>
                     <td>
                       <a class="btn btn-xs btn-info fa fa-download" href="/export/{{ $pgs->id }}" target="_blank"></a>

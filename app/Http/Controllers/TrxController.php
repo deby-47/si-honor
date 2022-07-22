@@ -62,7 +62,7 @@ class TrxController extends Controller
             ->select('golongan')
             ->where('id', '=', $request->input('id_pegawai'))
             ->get();
-        $pph = str_contains($golongan, 4) ? 15 : (str_contains($golongan, "Non") ? 15 : (str_contains($golongan, 3) ? 5 : 1));
+        $pph = str_contains($golongan, "IV") ? 15 : (str_contains($golongan, "III") ? 5 : 1);
 
         $trx = new Transaksi;
         $trx->id_pegawai = $request->input('id_pegawai');
@@ -78,7 +78,14 @@ class TrxController extends Controller
         $trx->jumlah_kotor = $request->jumlah_kotor;
         $trx->jumlah = $request->jumlah_kotor - ($pph * $request->jumlah_kotor / 100);
         $trx->tanggal_penerimaan = $request->input('tanggal_penerimaan');
-        $trx->kuota = $empty->isEmpty() ? $max - 1 : ($check_deskripsi->isEmpty() ? $latest - 1 : $latest);
+
+        if ($request->jumlah_kotor > 0)
+        {
+            $trx->kuota = $empty->isEmpty() ? $max - 1 : ($check_deskripsi->isEmpty() ? $latest - 1 : $latest);
+        } else {
+            $trx->kuota = $empty->isEmpty() ? $max : $latest;
+        }
+        
 
         if ($trx->kuota < 0) {
             $trx->save();
@@ -150,13 +157,14 @@ class TrxController extends Controller
 
         return PDF::loadView('layouts.transaksi.pdf', [
             'trx' => $trx,
-        ])->setPaper('a4', 'landscape')->stream();
+        ])->setPaper('f4', 'landscape')->stream();
     }
 
     public function getKuota($id)
     {
         $check_pg = DB::table('transaksi')->where('id_pegawai', '=', $id)->get();
-        if ($id == 4374 or $id == 4375)
+        $check_jabatan = DB::table('pegawai')->where('id', '=', $id)->value('jabatan');
+        if ($check_jabatan == 7 || $check_jabatan == 8)
         {
             $latest = "";
         } else {
@@ -217,6 +225,6 @@ class TrxController extends Controller
         Session::put('bendahara', $request->get('bendahara'));
         Session::save();
 
-        return Redirect::to('/export_pdf');
+        return Redirect::to('/export_penerima');
     }
 }
