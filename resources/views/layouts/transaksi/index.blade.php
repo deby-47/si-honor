@@ -179,8 +179,8 @@
                     <th scope="row">
                       <div class="media align-items-center">
                         <div class="media-body">
-                        @php $nip = strlen($t->nip) < 5 ? "-" : $t->nip @endphp
-                          <span class="name mb-0 text-sm">{{ $nip }}</span>
+                          @php $nip = strlen($t->nip) < 5 ? "-" : $t->nip @endphp
+                            <span class="name mb-0 text-sm">{{ $nip }}</span>
                         </div>
                       </div>
                     </th>
@@ -295,15 +295,25 @@
               </table>
             </div>
             <!-- Card footer -->
-            <div class="card-footer py-4">
-              <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
-                  <h3 class="mb-0">
-                    {{ $trx->withQueryString()->links() }}
-                  </h3>
-                </ul>
-              </nav>
-            </div>
+            @php $total = Illuminate\Support\Facades\DB::selectOne(DB::raw("select sum(if(kuota < 0,jumlah,0)) as totalLebih from transaksi"))->totalLebih; @endphp
+              <div class=" card-footer py-4">
+                <nav aria-label="...">
+                  <h4 class="mb-0">
+                    Jumlah Pembayaran Honorarium Melebihi Kuota: <br>
+                    <strong> {{ "Rp" . number_format($total, 2, ',','.') }} </strong>
+                  </h4>
+                </nav>
+              </div>
+
+              <div class="card-footer py-4">
+                <nav aria-label="...">
+                  <ul class="pagination justify-content-end mb-0">
+                    <h3 class="mb-0">
+                      {{ $trx->withQueryString()->links() }}
+                    </h3>
+                  </ul>
+                </nav>
+              </div>
           </div>
         </div>
       </div>

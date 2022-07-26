@@ -54,9 +54,9 @@
                                     <th scope="col" class="sort border" data-sort="title" style="text-align:center;font-size:12px;">Jabatan</th>
                                     <th scope="col" class="sort border" data-sort="tim" style="text-align:center;font-size:12px;">Jabatan dalam Tim</th>
                                     <th scope="col" class="sort border" data-sort="bulan" style="text-align:center;font-size:12px;">Jumlah Bulan</th>
-                                    <th scope="col" class="sort border" data-sort="jumlah" style="text-align:center;font-size:12px;">Jumlah</th>
+                                    <th scope="col" class="sort border" data-sort="jumlah" style="text-align:center;font-size:12px;">Jumlah Bruto</th>
                                     <th scope="col" class="sort border" data-sort="pph" style="text-align:center;font-size:12px;">PPh</th>
-                                    <th scope="col" class="sort border" data-sort="diterima" style="text-align:center;font-size:12px;">Diterima</th>
+                                    <th scope="col" class="sort border" data-sort="diterima" style="text-align:center;font-size:12px;">Jumlah Neto</th>
                                     <th scope="col" class="sort border" data-sort="kuota" style="text-align:center;font-size:12px;">Kuota Honorarium</th>
                                 </tr>
                             </thead>
