@@ -49,7 +49,7 @@
                             <thead class="thead-light border">
                                 <tr class="border">
                                     <th scope="col" class="sort border" data-sort="no" style="text-align:center;font-size:12px;">No</th>
-                                    <th scope="col" class="sort border" data-sort="pegawai" style="text-align:center;font-size:12px;">Pegawai</th>
+                                    <th scope="col" class="sort border" data-sort="pegawai" style="text-align:center;font-size:12px;">Nama</th>
                                     <th scope="col" class="sort border" data-sort="nip" style="text-align:center;font-size:12px;">NIP</th>
                                     <th scope="col" class="sort border" data-sort="title" style="text-align:center;font-size:12px;">Jabatan</th>
                                     <th scope="col" class="sort border" data-sort="tim" style="text-align:center;font-size:12px;">Jabatan dalam Tim</th>

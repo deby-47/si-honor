@@ -54,6 +54,8 @@ class PegawaiController extends Controller
         $pg->instansi = $request->instansi;
         $pg->nama = $request->nama;
         $pg->jabatan = $request->input('jabatan');
+        $pg->golongan = $request->golongan;
+        $pg->title = $request->title;
         $pg->save();
 
         Alert::success('Sukses!', 'Data berhasil tersimpan');

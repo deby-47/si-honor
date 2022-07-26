@@ -54,7 +54,15 @@
                             <input id="nama" type="text" class="form-control" name="nama" placeholder="Nama" required>
                         </div>
                         <div class="form-group">
-                            <label for="jabatan">Jabatan</label><br />
+                            <label for="title">Jabatan</label>
+                            <input id="title" type="text" class="form-control" name="title" placeholder="Jabatan" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="golongan">Golongan</label>
+                            <input id="golongan" type="text" class="form-control" name="golongan" placeholder="Golongan" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jabatan">Eselon</label><br />
                             <select class="custom-select" name="jabatan" required>
                                 <option selected>Pilih Jabatan</option>
                                 @foreach (App\Models\Jabatan::selectJbt() as $j)

@@ -21,7 +21,7 @@ class TrxController extends Controller
             ->join('jabatan_tim', 'transaksi.id_tim', '=', 'jabatan_tim.id_tim')
             ->join('pegawai', 'pegawai.id', '=', 'transaksi.id_pegawai')
             ->where('pegawai.status', '=', 1)
-            ->orderBy('transaksi.id_tim', 'ASC')
+            ->orderBy('transaksi.id_trx', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->paginate(10);
 
@@ -75,6 +75,7 @@ class TrxController extends Controller
         $trx->no_spm = $request->no_spm;
         $trx->deskripsi = $request->deskripsi;
         $trx->keterangan = $request->keterangan;
+        $trx->bulan = $request->bulan;
         $trx->jumlah_kotor = $request->jumlah_kotor;
         $trx->jumlah = $request->jumlah_kotor - ($request->jumlah_kotor * $pph / 100);
         $trx->tanggal_penerimaan = $request->input('tanggal_penerimaan');
@@ -117,9 +118,17 @@ class TrxController extends Controller
 
     public function update(Request $request)
     {
+        $golongan = DB::table('pegawai')
+            ->select('golongan')
+            ->where('nip', '=', $request->nip)
+            ->get();
+        $pph = str_contains($golongan, "IV") ? 15 : (str_contains($golongan, "III") ? 5 : 0);
+
         DB::table('transaksi')->where('id_trx', $request->id)->update([
             'no_sk' => $request->no_sk,
             'id_tim' => $request->get('jabatan'),
+            'jumlah_kotor' => $request->jumlah_kotor,
+            'jumlah' => $request->jumlah_kotor - ($request->jumlah_kotor * $pph / 100),
             'tanggal_penerimaan' => $request->tanggal_penerimaan
         ]);
 
@@ -151,6 +160,7 @@ class TrxController extends Controller
             ->where('pegawai.status', '=', 1)
             ->where('deskripsi', 'LIKE', '%' . $search . '%')
             ->orWhere('keterangan', 'LIKE', '%' . $search . '%')
+            ->orWhere('no_spm', 'LIKE', '%' . $search . '%')
             ->orderBy('transaksi.id_tim', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->get()->toArray();
@@ -202,7 +212,8 @@ class TrxController extends Controller
             ->where('nama', 'LIKE', '%' . $search . '%')
             ->orWhere('deskripsi', 'LIKE', '%' . $search . '%')
             ->orWhere('keterangan', 'LIKE', '%' . $search . '%')
-            ->orderBy('transaksi.id_tim', 'ASC')
+            ->orWhere('no_spm', 'LIKE', '%' . $search . '%')
+            ->orderBy('transaksi.id_trx', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->paginate(10);
 

@@ -7,6 +7,7 @@
         overflow-x: hidden;
     }
 </style>
+
 <body>
     <nav class="sidenav navbar navbar-verticaL fixed-left navbar-expand-xs navbar-light" id="sidenav-main">
         <div class="scrollbar-inner">
@@ -53,15 +54,15 @@
                             <input value="{{ $t->nama }}" id="pegawai" type="text" class="form-control" name="pegawai" required disabled>
                         </div>
                         <div class="form-group">
-                            <label for="jabatan">Jabatan</label>
-                            <input value="{{ $t->kode }}" id="jabatan" type="text" class="form-control" name="jabatan" required disabled>
+                            <label for="nip">NIP</label>
+                            <input value="{{ $t->nip }}" id="nip" type="text" class="form-control" name="nip" required readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label for="instansi">Instansi</label>
                             <input value="{{ $t->instansi }}" id="instansi" type="text" class="form-control" name="instansi" required disabled>
                         </div>
                         <div class="form-group">
-                        <label for="jabatan">Jabatan dalam Tim</label><br/>
+                            <label for="jabatan">Jabatan dalam Tim</label><br />
                             @php $jbt = App\Models\JabatanTim::selectJbt()->sortBy('id_tim'); @endphp
                             <select class="custom-select" name="jabatan" id="jabatan" required>
                                 <option selected disabled>Pilih Jabatan</option>
@@ -88,11 +89,7 @@
                         </div>
                         <div class="form-group">
                             <label for="bulan">Jumlah Kotor</label>
-                            <input value="{{ $t->jumlah_kotor }}" id="bulan" type="text" class="form-control" name="bulan" placeholder="Jumlah Bulan">
-                        </div>
-                        <div class="form-group">
-                            <label for="jumlah">Jumlah Diterima</label>
-                            <input value="{{ $t->jumlah }}" id="jumlah" type="text" class="form-control" name="jumlah" required disabled>
+                            <input value="{{ $t->jumlah_kotor }}" id="jumlah_kotor" type="text" class="form-control" name="jumlah_kotor">
                         </div>
                         <div class="form-group">
                             <label for="tanggal_penerimaan">Tanggal SPM</label>
