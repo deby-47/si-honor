@@ -87,7 +87,6 @@ class TrxController extends Controller
             $trx->kuota = $empty->isEmpty() ? $max : $latest;
         }
         
-
         if ($trx->kuota < 0) {
             $trx->save();
             alert()->html('Penerimaan Honorarium Melebihi Batas', '<a href="/export" target="_blank"><b>Download</b></a> riwayat penerimaan honorarium.', 'warning')->persistent(true);
