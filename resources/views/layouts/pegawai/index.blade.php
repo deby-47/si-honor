@@ -187,15 +187,15 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" class="sort" data-sort="no" style="text-align:center">No</th>
-                    <th scope="col" class="sort" data-sort="nip" style="text-align:center">NIP</th>
-                    <th scope="col" class="sort" data-sort="nama" style="text-align:center">Nama</th>
-                    <th scope="col" class="sort" data-sort="golongan" style="text-align:center">Golongan</th>
-                    <th scope="col" class="sort" data-sort="title" style="text-align:center">Jabatan</th>
-                    <th scope="col" class="sort" data-sort="instansi" style="text-align:center">Instansi</th>
-                    <th scope="col" class="sort" data-sort="jabatan" style="text-align:center">Eselon</th>
-                    <th scope="col" class="sort" data-sort="kuota" style="text-align:center">Kuota Honorarium</th>
-                    <th scope="col" class="sort" style="text-align:center">Action</th>
+                    <th scope="col" class="sort" data-sort="no" style="text-align:center;font-size:12px;">No</th>
+                    <th scope="col" class="sort" data-sort="nip" style="text-align:center;font-size:12px;">NIP</th>
+                    <th scope="col" class="sort" data-sort="nama" style="text-align:center;font-size:12px;">Nama</th>
+                    <th scope="col" class="sort" data-sort="golongan" style="text-align:center;font-size:12px;">Golongan</th>
+                    <th scope="col" class="sort" data-sort="title" style="text-align:center;font-size:12px;">Jabatan</th>
+                    <th scope="col" class="sort" data-sort="instansi" style="text-align:center;font-size:12px;">Instansi</th>
+                    <th scope="col" class="sort" data-sort="jabatan" style="text-align:center;font-size:12px;">Eselon</th>
+                    <th scope="col" class="sort" data-sort="kuota" style="text-align:center;font-size:12px;">Kuota Honorarium</th>
+                    <th scope="col" class="sort" style="text-align:center;font-size:12px;">Action</th>
                   </tr>
                 </thead>
                 <tbody class="list">
@@ -210,29 +210,45 @@
                     </th>
                     <td>
                       <div class="d-flex align-items-center">
-                      @php $nip = strlen($pgs->nip) < 5 ? "-" : $pgs->nip @endphp
-                        <span class="completion mr-2" style="text-align:center">{{ $nip }}</span>
+                        @php $nip = strlen($pgs->nip) < 5 ? "-" : $pgs->nip @endphp
+                          <span class="completion mr-2" style="text-align:center">
+                            <strong>
+                              {{ $nip }}
+                            </strong>
+                          </span>
                       </div>
                     </td>
                     <td class="nama" style="text-align:center">
-                      {{ $pgs->nama }}
+                      <strong>
+                        {{ $pgs->nama }}
+                      </strong>
                     </td>
                     <td class="golongan" style="text-align:center">
-                      {{ $pgs->golongan }}
+                      <strong>
+                        {{ $pgs->golongan }}
+                      </strong>
                     </td>
                     <td class="title" style="text-align:center">
-                      {{ $pgs->title }}
+                      <strong>
+                        {{ $pgs->title }}
+                      </strong>
                     </td>
                     <td class="instansi" style="text-align:center">
-                      {{ $pgs->instansi }}
+                      <strong>
+                        {{ $pgs->instansi }}
+                      </strong>
                     </td>
                     <td class="jabatan">
                       @php $kode = str_contains($pgs->kode, "Pejabat") || str_contains($pgs->kode, "Gubernur") ? "Non-Eselon" : $pgs->kode @endphp
-                      {{ $kode }}
+                      <strong>
+                        {{ $kode }}
+                      </strong>
                     </td>
                     <td class="jabatan" style="text-align:center">
-                    @php $kuota = $pgs->max_kuota > 5 ? "-" : $pgs->max_kuota @endphp
-                      {{ $kuota }}
+                      @php $kuota = $pgs->max_kuota > 5 ? "-" : $pgs->max_kuota @endphp
+                      <strong>
+                        {{ $kuota }}
+                      </strong>
                     </td>
                     <td>
                       <a class="btn btn-xs btn-info fa fa-download" href="/export/{{ $pgs->id }}" target="_blank"></a>

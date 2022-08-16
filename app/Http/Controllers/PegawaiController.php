@@ -39,12 +39,18 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'nip' => 'required',
+            'nip' => 'required|numeric',
             'nama' => 'required',
+            'golongan' => 'required',
+            'title' => 'required',
             'jabatan' => 'required'
         ];
         $msg = [
-            'required' => 'The :attribute field is required.'
+            'nip.required' => 'NIP harus diisi.',
+            'nama.required' => 'Nama harus diisi.',
+            'golongan.required' => 'Golongan harus diisi.',
+            'title.required' => 'Jabatan harus diisi.',
+            'nip.numeric' => 'NIP harus berupa angka.'
         ];
 
         $this->validate($request, $rules, $msg);
@@ -88,20 +94,28 @@ class PegawaiController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'nip' => 'required',
+            'nip' => 'required|numeric',
             'nama' => 'required',
+            'golongan' => 'required',
+            'title' => 'required',
             'jabatan' => 'required'
         ];
         $msg = [
-            'required' => 'The :attribute field is required.'
+            'nip.required' => 'NIP harus diisi.',
+            'nama.required' => 'Nama harus diisi.',
+            'golongan.required' => 'Golongan harus diisi.',
+            'title.required' => 'Jabatan harus diisi.',
+            'nip.numeric' => 'NIP harus berupa angka.'
         ];
 
         $this->validate($request, $rules, $msg);
-
+        
         DB::table('pegawai')->where('id', $request->id)->update([
             'nip' => $request->nip,
             'instansi' => $request->instansi,
             'nama' => $request->nama,
+            'title' => $request->title,
+            'golongan' => $request->golongan,
             'jabatan' => $request->get('jabatan')
         ]);
 

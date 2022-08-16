@@ -41,6 +41,15 @@
             <div class="header-body mt-7 mb-7">
                 <div class="col-xs-6" style="position:fixed; left: 300px; right: 80px;">
                     @foreach ($pg as $pgs)
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <form method="POST">
                         <div class="form-group">
                             <label for="nip">NIP</label>
@@ -52,10 +61,18 @@
                         </div>
                         <div class="form-group">
                             <label for="instansi">Instansi</label>
-                            <input value="{{ $pgs->instansi }}" id="instansi" type="text" class="form-control" name="instansi" placeholder="No Rekening">
+                            <input value="{{ $pgs->instansi }}" id="instansi" type="text" class="form-control" name="instansi">
                         </div>
                         <div class="form-group">
-                        <label for="jabatan">Jabatan</label><br/>
+                            <label for="title">Jabatan</label>
+                            <input value="{{ $pgs->title }}" id="title" type="text" class="form-control" name="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="golongan">Golongan</label>
+                            <input value="{{ $pgs->golongan }}" id="golongan" type="text" class="form-control" name="golongan">
+                        </div>
+                        <div class="form-group">
+                        <label for="jabatan">Eselon</label><br/>
                             @php $jbt = App\Models\Jabatan::selectJbt(); @endphp
                             <select class="custom-select" name="jabatan" id="jabatan" required>
                                 <!-- <option selected disabled>{{ $pgs->kode }}</option> -->

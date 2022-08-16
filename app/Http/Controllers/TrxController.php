@@ -37,35 +37,53 @@ class TrxController extends Controller
 
     public function store(Request $request)
     {
+        $rules = [
+            'pegawai' => 'numeric',
+            'tim' => 'numeric',
+            'bulan' => 'required|numeric',
+            'jumlah_kotor' => 'required|numeric',
+        ];
+
+        $msg = [
+            'pegawai.numeric' => 'Pegawai harus dipilih',
+            'tim.numeric' => 'Jabatan dalam Tim harus dipilih.',
+            'bulan.required' => 'Bulan harus diisi.',
+            'jumlah_kotor.required' => 'Jumlah harus diisi.',
+            'bulan.numeric' => 'Bulan harus berupa angka.',
+            'jumlah_kotor.numeric' => 'Jumlah harus berupa angka.'
+        ];
+
+        $this->validate($request, $rules, $msg);
+
         $jabatan = DB::table('pegawai')
-            ->where('id', '=', $request->input('id_pegawai'))
+            ->where('id', '=', $request->input('pegawai'))
             ->value('jabatan');
         $max = DB::table('jabatan')
             ->where('id_jbt', '=', $jabatan)
             ->value('max_kuota');
         $latest = DB::table('transaksi')
-            ->where('id_pegawai', '=', $request->input('id_pegawai'))
+            ->where('id_pegawai', '=', $request->input('pegawai'))
             ->orderBy('created_at', 'DESC')->limit(1)
             ->where('status', '=', 1)
             ->value('kuota');
         $empty = DB::table('transaksi')
-            ->where('id_pegawai', '=', $request->input('id_pegawai'))
+            ->where('id_pegawai', '=', $request->input('pegawai'))
             ->where('status', '=', 1)
             ->get();
         $check_deskripsi = DB::table('transaksi')
             ->select('deskripsi')
-            ->where('id_pegawai', '=', $request->input('id_pegawai'))
+            ->where('id_pegawai', '=', $request->input('pegawai'))
             ->where('deskripsi', '=', $request->input('deskripsi'))
             ->where('status', '=', 1)
             ->get();
         $golongan = DB::table('pegawai')
             ->select('golongan')
-            ->where('id', '=', $request->input('id_pegawai'))
+            ->where('id', '=', $request->input('pegawai'))
             ->get();
         $pph = str_contains($golongan, "IV") ? 15 : (str_contains($golongan, "III") ? 5 : 0);
 
         $trx = new Transaksi;
-        $trx->id_pegawai = $request->input('id_pegawai');
+        $trx->id_pegawai = $request->input('pegawai');
         Session::put('id_pgs', $trx->id_pegawai);
         Session::save();
 
@@ -117,6 +135,24 @@ class TrxController extends Controller
 
     public function update(Request $request)
     {
+        $rules = [
+            'jabatan' => 'required',
+            'bulan' => 'required|numeric',
+            'jumlah_kotor' => 'required|numeric',
+            'no_sk' => 'required'
+        ];
+
+        $msg = [
+            'jabatan.required' => 'Jabatan dalam Tim harus dipilih.',
+            'bulan.required' => 'Bulan harus diisi.',
+            'jumlah_kotor.required' => 'Jumlah harus diisi.',
+            'no_sk' => 'No SK harus diisi.',
+            'bulan.numeric' => 'Bulan harus berupa angka.',
+            'jumlah_kotor.numeric' => 'Jumlah harus berupa angka.'
+        ];
+
+        $this->validate($request, $rules, $msg);
+
         $golongan = DB::table('pegawai')
             ->select('golongan')
             ->where('nip', '=', $request->nip)

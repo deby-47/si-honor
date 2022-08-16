@@ -3,7 +3,7 @@
 <title>Tambah Transaksi</title>
 <style>
     .box-form {
-        max-height: 600px;
+        height: 600px;
         overflow-y: auto;
         overflow-x: hidden;
     }
@@ -53,12 +53,21 @@
     </div>
     <div class="header bg-gradient" style="position:fixed; left: 300px; right: 80px; top: 100px;">
         <div class="container-fluid mt--7">
-            <div class="header-body mt-7 mb-7">
+            <div class="header-body mt-7 mb-7 box-form">
                 <div class="col-xs-6" style="position:fixed; left: 300px; right: 80px;">
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <form method="POST" class="box-form">
-                        <label for="id_pegawai">Pegawai</label>
+                        <label for="pegawai">Pegawai</label>
                         <div class="form-group">
-                            <select class="custom-select" name="id_pegawai" id="id_pegawai" style="width:100%" required>
+                            <select class="custom-select" name="pegawai" id="pegawai" style="width:100%" required>
                                 <option selected>Pilih Pegawai</option>
                                 @foreach (App\Models\Pegawai::selectPegawai()->sortBy('nama') as $pg)
                                 <option value="{{ $pg->id }}">{{ $pg->nama . " - " . $pg->nip . " - " . $pg->title . " - " . $pg->instansi}}</option>
@@ -114,9 +123,9 @@
         </div>
     </div>
     <script>
-        $('#id_pegawai').select2();
+        $('#pegawai').select2();
         $('#tim').select2();
-        $('#id_pegawai').on('change', function() {
+        $('#pegawai').on('change', function() {
             var pegawaiID = $(this).val();
             if (pegawaiID) {
                 $.ajax({
