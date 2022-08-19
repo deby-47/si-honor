@@ -1,5 +1,12 @@
 @extends('layouts.pegawai.app')
 <title>Tambah Pegawai</title>
+<style>
+    .box-form {
+        height: 600px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+</style>
 
 <body>
     <nav class="sidenav navbar navbar-verticaL fixed-left navbar-expand-xs navbar-light" id="sidenav-main">
@@ -49,7 +56,7 @@
                         </ul>
                     </div>
                     @endif
-                    <form method="POST">
+                    <form method="POST" class="box-form">
                         <div class="form-group">
                             <label for="nip">NIP</label>
                             <input id="nip" type="text" class="form-control" name="nip" placeholder="NIP" required>

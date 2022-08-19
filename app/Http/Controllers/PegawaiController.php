@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TransaksiExport;
+use Illuminate\Support\Facades\Session;
 
 class PegawaiController extends Controller
 {
@@ -25,6 +26,8 @@ class PegawaiController extends Controller
             ->where('pegawai.status', '=', 1)
             ->orderBy('pegawai.nama', 'ASC')
             ->paginate(10);
+        
+        Session::put('pg_url', request()->fullUrl());
 
         return view('layouts.pegawai.index', [
             'pg' => $pgs,
@@ -105,7 +108,8 @@ class PegawaiController extends Controller
             'nama.required' => 'Nama harus diisi.',
             'golongan.required' => 'Golongan harus diisi.',
             'title.required' => 'Jabatan harus diisi.',
-            'nip.numeric' => 'NIP harus berupa angka.'
+            'jabatan.required' => 'Eselon harus diisi.',
+            'nip.numeric' => 'NIP harus berupa angka.',
         ];
 
         $this->validate($request, $rules, $msg);
@@ -119,12 +123,13 @@ class PegawaiController extends Controller
             'jabatan' => $request->get('jabatan')
         ]);
 
-        return Redirect::to('/pegawai');
+        return Redirect::to(Session::get('pg_url'));
     }
 
     public function search(Request $request)
     {
         $search = $request->search;
+        Session::put('pg_url', request()->fullUrl());
 
         $pgs = DB::table('pegawai')
             ->join('jabatan', 'pegawai.jabatan', '=', 'jabatan.id_jbt')

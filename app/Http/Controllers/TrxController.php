@@ -24,6 +24,8 @@ class TrxController extends Controller
             ->orderBy('transaksi.id_trx', 'ASC')
             ->where('transaksi.status', '=', 1)
             ->paginate(10);
+        
+        Session::put('trx_url', request()->fullUrl());
 
         return view('layouts.transaksi.index', [
             'trx' => $trx,
@@ -167,7 +169,7 @@ class TrxController extends Controller
             'tanggal_penerimaan' => $request->tanggal_penerimaan
         ]);
 
-        return Redirect::to('/trx');
+        return Redirect::to(Session::get('trx_url'));
     }
 
     public function destroy($id)
@@ -237,6 +239,7 @@ class TrxController extends Controller
     {
         $search = $request->search;
         Session::put('search', $search);
+        Session::put('trx_url', request()->fullUrl());
         Session::save();
 
         $transaksi = DB::table('transaksi')
