@@ -48,16 +48,16 @@
             <div class="header-body mt-7 mb-7">
                 <div class="col-xs-6" style="position:fixed; left: 300px; right: 80px;">
                     @foreach ($pg as $pgs)
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
                     <form method="POST" class="box-form">
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                         <div class="form-group">
                             <label for="nip">NIP</label>
                             <input value="{{ $pgs->nip }}" id="nip" type="text" class="form-control" name="nip" placeholder="NIP" required>
@@ -79,7 +79,7 @@
                             <input value="{{ $pgs->golongan }}" id="golongan" type="text" class="form-control" name="golongan">
                         </div>
                         <div class="form-group">
-                        <label for="jabatan">Eselon</label><br/>
+                            <label for="jabatan">Eselon</label><br />
                             @php $jbt = App\Models\Jabatan::selectJbt(); @endphp
                             <select class="custom-select" name="jabatan" id="jabatan" required>
                                 <!-- <option selected disabled>{{ $pgs->kode }}</option> -->

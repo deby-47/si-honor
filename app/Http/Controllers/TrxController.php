@@ -161,12 +161,18 @@ class TrxController extends Controller
             ->get();
         $pph = str_contains($golongan, "IV") ? 15 : (str_contains($golongan, "III") ? 5 : 0);
 
+        $get_kuota = DB::table('transaksi')
+                ->where('id_trx', $request->id)
+                ->value('kuota');
+        $kuota = ($request->jumlah_kotor == 0) ? $get_kuota + 1 : $get_kuota;
+
         DB::table('transaksi')->where('id_trx', $request->id)->update([
             'no_sk' => $request->no_sk,
             'id_tim' => $request->get('jabatan'),
             'jumlah_kotor' => $request->jumlah_kotor,
             'jumlah' => $request->jumlah_kotor - ($request->jumlah_kotor * $pph / 100),
-            'tanggal_penerimaan' => $request->tanggal_penerimaan
+            'tanggal_penerimaan' => $request->tanggal_penerimaan,
+            'kuota' => $kuota
         ]);
 
         return Redirect::to(Session::get('trx_url'));

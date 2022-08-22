@@ -48,16 +48,16 @@
             <div class="header-body mt-7 mb-7">
                 <div class="col-xs-6" style="position:fixed; left: 300px; right: 80px;">
                     @foreach ($trx as $t)
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
                     <form method="POST" class="box-form">
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                         <div class="form-group">
                             <label for="pegawai">Pegawai</label>
                             <input value="{{ $t->nama }}" id="pegawai" type="text" class="form-control" name="pegawai" required disabled>
