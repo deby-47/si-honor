@@ -251,8 +251,9 @@
                       </strong>
                     </td>
                     <td>
+                      @php $id = Illuminate\Support\Facades\Crypt::encrypt($pgs->id) @endphp
                       <a class="btn btn-xs btn-info fa fa-download" href="/export/{{ $pgs->id }}" target="_blank"></a>
-                      <a class="btn btn-xs btn-primary fa fa-pen" href="/pegawai/{{ $pgs->id }}/edit"></a>
+                      <a class="btn btn-xs btn-primary fa fa-pen" href="/pegawai/{{ $id }}/edit"></a>
                       <form method="POST" action="{{ route('hapus', $pgs->id) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">

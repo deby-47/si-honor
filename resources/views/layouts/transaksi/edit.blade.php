@@ -64,7 +64,8 @@
                         </div>
                         <div class="form-group">
                             <label for="nip">NIP</label>
-                            <input value="{{ $t->nip }}" id="nip" type="text" class="form-control" name="nip" required readonly="readonly">
+                            @php $nip = strlen($t->nip) < 5 ? "-" : $t->nip @endphp
+                            <input value="{{ $nip }}" id="nip" type="text" class="form-control" name="nip" required readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label for="instansi">Instansi</label>

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Crypt;
 
 class TrxController extends Controller
 {
@@ -120,7 +121,7 @@ class TrxController extends Controller
 
     public function edit(Request $request)
     {
-        $id = $request->id;
+        $id = Crypt::decrypt($request->id);
         $trx = DB::table('transaksi')
             ->join('jabatan', 'transaksi.id_jabatan', '=', 'jabatan.id_jbt')
             ->join('jabatan_tim', 'transaksi.id_tim', '=', 'jabatan_tim.id_tim')
@@ -136,7 +137,8 @@ class TrxController extends Controller
     }
 
     public function update(Request $request)
-    {
+    {   
+        $id = Crypt::decrypt($request->id);
         $rules = [
             'jabatan' => 'required',
             'bulan' => 'required|numeric',
@@ -162,15 +164,16 @@ class TrxController extends Controller
         $pph = str_contains($golongan, "IV") ? 15 : (str_contains($golongan, "III") ? 5 : 0);
 
         $get_kuota = DB::table('transaksi')
-                ->where('id_trx', $request->id)
+                ->where('id_trx', $id)
                 ->value('kuota');
         $kuota = ($request->jumlah_kotor == 0) ? $get_kuota + 1 : $get_kuota;
 
-        DB::table('transaksi')->where('id_trx', $request->id)->update([
+        DB::table('transaksi')->where('id_trx', $id)->update([
             'no_sk' => $request->no_sk,
             'id_tim' => $request->get('jabatan'),
             'jumlah_kotor' => $request->jumlah_kotor,
             'jumlah' => $request->jumlah_kotor - ($request->jumlah_kotor * $pph / 100),
+            'keterangan' => $request->keterangan,
             'tanggal_penerimaan' => $request->tanggal_penerimaan,
             'kuota' => $kuota
         ]);

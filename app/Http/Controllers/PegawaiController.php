@@ -11,6 +11,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TransaksiExport;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Crypt;
 
 class PegawaiController extends Controller
 {
@@ -83,7 +84,7 @@ class PegawaiController extends Controller
 
     public function edit(Request $request)
     {
-        $id = $request->id;
+        $id = Crypt::decrypt($request->id);
         $pg = DB::table('pegawai')
             ->join('jabatan', 'pegawai.jabatan', '=', 'jabatan.id_jbt')
             ->where('pegawai.status', '=', 1)->where('id', $id)
@@ -96,6 +97,7 @@ class PegawaiController extends Controller
 
     public function update(Request $request)
     {
+        $id = Crypt::decrypt($request->id);
         $rules = [
             'nip' => 'required|numeric',
             'nama' => 'required',
@@ -114,7 +116,7 @@ class PegawaiController extends Controller
 
         $this->validate($request, $rules, $msg);
         
-        DB::table('pegawai')->where('id', $request->id)->update([
+        DB::table('pegawai')->where('id', $id)->update([
             'nip' => $request->nip,
             'instansi' => $request->instansi,
             'nama' => $request->nama,

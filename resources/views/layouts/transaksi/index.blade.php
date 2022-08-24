@@ -280,7 +280,8 @@
                       </div>
                     </th>
                     <td>
-                      <a class="btn btn-xs btn-primary fa fa-pencil" href="/trx/{{ $t->id_trx }}/edit"></a>
+                      @php $id = Illuminate\Support\Facades\Crypt::encrypt($t->id_trx) @endphp
+                      <a class="btn btn-xs btn-primary fa fa-pencil" href="/trx/{{ $id }}/edit"></a>
                       <!-- <form method="POST" action="{{ route('trx_hapus', $t->id_trx) }}">
                         @csrf
                         <input type="hidden" name="destroy" value="DELETE">
